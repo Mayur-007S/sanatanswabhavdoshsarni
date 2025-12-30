@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swabhav Dosh Sarni - Sanatan Sanstha</title>
+    <meta name="description"
+        content="A tool for self-introspection and personality defect removal, inspired by Sanatan Sanstha. Log mistakes, take decisions, and observe transformation.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- XLSX library removed from sync load to improve performance -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .nav-primary {
+            background-color: #FFFFCB;
+        }
+
+        .nav-secondary {
+            background-color: #D3EFFB;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Google Translate Hiding Elements */
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-gadget-icon,
+        .goog-te-spinner-pos {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        #google_translate_element {
+            height: 0;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .modal-overlay {
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        .notranslate {
+            translate: no;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .nav-link.active-tab {
+            border-bottom: 2px solid #2563eb;
+            color: #1e40af;
+        }
+
+        /* Custom Multi-Select Dropdown */
+        .multi-select-container {
+            position: relative;
+        }
+
+        .multi-select-trigger {
+            cursor: pointer;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 8px 12px;
+        }
+
+        .multi-select-placeholder {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .selected-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .selected-badge button {
+            background: none;
+            border: none;
+            color: #991b1b;
+            cursor: pointer;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .selected-badge button:hover {
+            color: #7f1d1d;
+        }
+
+        .multi-select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-top: 4px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            max-height: 320px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .multi-select-dropdown.active {
+            display: flex;
+        }
+
+        .multi-select-search {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .multi-select-search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .multi-select-search input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(254, 226, 226, 0.5);
+        }
+
+        .multi-select-options {
+            overflow-y: auto;
+            max-height: 240px;
+        }
+
+        .multi-select-group-label {
+            padding: 8px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            background-color: #f8fafc;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .multi-select-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            transition: background-color 0.15s;
+        }
+
+        .multi-select-option:hover {
+            background-color: #f8fafc;
+        }
+
+        .multi-select-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #ef4444;
+        }
+
+        .multi-select-option label {
+            cursor: pointer;
+            flex: 1;
+            user-select: none;
+        }
+
+        .multi-select-option.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="text-slate-900">
+    <div id="google_translate_element"></div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="nav-primary border-b border-orange-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="w-10"></div>
+            <h1 class="text-2xl font-bold text-orange-800 tracking-wide uppercase notranslate">Sanatan Sanstha</h1>
+            <button id="menuBtn" class="p-2 hover:bg-orange-200/50 rounded-full transition-colors"
+                aria-label="Open Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="text-orange-800">
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Sub Navigation Bar -->
+    <nav class="nav-secondary border-b border-blue-100 sticky top-[65px] z-40 shadow-sm">
+        <div class="max-w-6xl mx-auto overflow-x-auto hide-scrollbar flex justify-start md:justify-center">
+            <ul
+                class="flex items-center gap-8 px-6 py-3 whitespace-nowrap text-[11px] md:text-xs font-bold text-blue-800 uppercase tracking-wider">
+                <li id="nav-wrong" class="nav-link cursor-pointer transition-colors pb-0.5 active-tab">Wrong Things</li>
+                <li id="nav-decision" class="nav-link cursor-pointer transition-colors pb-0.5">Right Decision</li>
+                <li id="nav-results" class="nav-link cursor-pointer transition-colors pb-0.5">Results</li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Options Modal -->
+    <div id="settingsModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4">
+        <div id="modalOverlay" class="absolute inset-0 modal-overlay"></div>
+        <div
+            class="bg-white w-full max-w-sm rounded-3xl shadow-2xl relative z-10 overflow-hidden transform scale-95 transition-transform duration-200">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="text-lg font-bold">Menu</h3>
+                <button id="closeModal" class="text-slate-400 hover:text-slate-600">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 space-y-2">
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 mb-2">
+                    <label for="langSelect" class="block text-[10px] font-bold text-slate-600 uppercase mb-2">Select
+                        Language</label>
+                    <select id="langSelect"
+                        class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none font-medium">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi (हिन्दी)</option>
+                        <option value="mr">Marathi (मराठी)</option>
+                        <option value="gu">Gujarati (ગુજરાતી)</option>
+                        <option value="kn">Kannada (ಕನ್ನಡ)</option>
+                        <option value="ta">Tamil (தமிழ்)</option>
+                    </select>
+                </div>
+                <button id="exportAllBtn"
+                    class="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors text-slate-700 font-semibold text-sm">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                    </svg>
+                    Export All Data (Excel)
+                </button>
+                <div class="mt-4 p-4 rounded-2xl bg-red-50 border border-red-100">
+                    <h4 class="text-xs font-bold text-red-600 uppercase mb-2">Help & Feedback / मदत आणि अभिप्राय</h4>
+                    <p class="text-xs text-slate-700 mb-3 leading-relaxed font-medium">
+                        Facing an issue? Just answer these 3 simple things in your email:
+                    </p>
+                    <div class="text-[10px] space-y-2 text-slate-600 mb-4 bg-white p-3 rounded-xl border border-red-50">
+                        <div>
+                            <p class="font-bold text-slate-800">1. What went wrong? (काय अडचण आली?)</p>
+                            <p class="text-[9px] text-slate-500">Ex: "The save button is not working."</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800">2. Which phone/PC? (कोणता फोन वापरताय?)</p>
+                            <p class="text-[9px] text-slate-500">Ex: "Samsung phone" or "iPhone"</p>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800">3. Attach a Screenshot (शक्य असल्यास फोटो पाठवा)</p>
+                            <p class="text-[9px] text-slate-500 italic">This helps us fix it 10x faster!</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:mayurmyana111@gmail.com?subject=Problem Report - Sanatan App&body=Hello Mayur,%0A%0AI found an issue in the app:%0A%0A1. What happened? (काय झाले?): %0A%0A2. I am using this phone/computer (मी हा फोन वापरत आहे): %0A%0A(Please attach a photo if possible / शक्य असल्यास फोटो जोडा)%0A"
+                            class="flex items-center justify-center gap-2 bg-red-600 text-white py-3 rounded-xl hover:bg-slate-900 font-bold text-xs transition-all shadow-md active:scale-95">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            Open in Mail App (ॲपमध्ये उघडा)
+                        </a>
+                        <a target="_blank"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=mayurmyana111@gmail.com&su=Problem%20Report%20-%20Sanatan%20App&body=Hello%20Mayur,%0A%0AI%20found%20an%20issue%20in%20the%20app:%0A%0A1.%20What%20happened?%20(काय%20झाले?):%20%0A%0A2.%20I%20am%20using%20this%20phone/computer%20(मी%20हा%20फोन%20वापरत%20आहे):%20%0A%0A(Please%20attach%20a%20photo%20if%20possible%20/%20शक्य%20असल्यास%20फोटो%20जोडा)%0A"
+                            class="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 py-3 rounded-xl hover:bg-slate-50 font-bold text-xs transition-all shadow-sm active:scale-95">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                            Open in Chrome / Browser
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 p-4 text-center">
+                <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest notranslate">Version 1.8.5</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- WRONG THINGS PAGE -->
+        <div id="page-wrong" class="page-content active max-w-6xl mx-auto px-4 py-8">
+            <header class="mb-8">
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">Wrong Things Log</h2>
+                <p class="text-slate-600 text-sm italic">"Introspection is the first step toward purity."</p>
+            </header>
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4">
+                    <div class="bg-white px-6 pt-6 pb-8 rounded-3xl shadow-xl border border-slate-100 h-fit">
+                        <h2 class="text-lg font-bold mb-5 flex items-center gap-2">
+                            <span class="w-2 h-6 bg-red-500 rounded-full"></span> Log Mistake
+                        </h2>
+                        <form id="wrongForm" class="space-y-4">
+                            <input type="hidden" id="wrongEditId">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="wrongDateInput"
+                                        class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Date</label>
+                                    <input type="date" id="wrongDateInput" required
+                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none">
+                                </div>
+                                <div>
+                                    <label for="wrongTimeInput"
+                                        class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Time</label>
+                                    <input type="text" id="wrongTimeInput" required placeholder="HH:MM"
+                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Personality
+                                    Defects
+                                    (Dosh) - Select Multiple</label>
+
+                                <div class="multi-select-container">
+                                    <div id="doshTrigger"
+                                        class="multi-select-trigger w-full rounded-xl border-slate-200 bg-slate-50 border focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none">
+                                        <span class="multi-select-placeholder">Click to select defects...</span>
+                                    </div>
+
+                                    <div id="doshDropdown" class="multi-select-dropdown">
+                                        <div class="multi-select-search">
+                                            <input type="text" id="doshSearch" placeholder="🔍 Search defects..."
+                                                autocomplete="off">
+                                        </div>
+
+                                        <div class="multi-select-options" id="doshOptions">
+                                            <div class="multi-select-group-label">The Six Foes (Shadripu / षड्रिपू)
+                                            </div>
+                                            <div class="multi-select-option" data-value="Desire (Kama)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_desire" value="Desire (Kama)">
+                                                <label for="dosh_desire">Desire / Lust (काम)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Anger (Krodha)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_anger" value="Anger (Krodha)">
+                                                <label for="dosh_anger">Anger (क्रोध / राग)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Greed (Lobha)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_greed" value="Greed (Lobha)">
+                                                <label for="dosh_greed">Greed (लोभ)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Attachment (Moha)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_attachment" value="Attachment (Moha)">
+                                                <label for="dosh_attachment">Attachment / Delusion (मोह)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Arrogance (Mada)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_arrogance" value="Arrogance (Mada)">
+                                                <label for="dosh_arrogance">Arrogance (मद / ताठा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Jealousy (Matsarya)"
+                                                data-group="shadripu">
+                                                <input type="checkbox" id="dosh_jealousy" value="Jealousy (Matsarya)">
+                                                <label for="dosh_jealousy">Jealousy / Envy (मत्सर / द्वेष)</label>
+                                            </div>
+
+                                            <div class="multi-select-group-label">Defects Affecting Others (इतरांना
+                                                त्रासदायक)</div>
+                                            <div class="multi-select-option" data-value="Short-tempered"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_shorttempered" value="Short-tempered">
+                                                <label for="dosh_shorttempered">Short-tempered (शीघ्रकोपीपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Irritable"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_irritable" value="Irritable">
+                                                <label for="dosh_irritable">Irritable (चिडखोरपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Quarrelsome"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_quarrelsome" value="Quarrelsome">
+                                                <label for="dosh_quarrelsome">Quarrelsome (भांडखोरपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Destructive"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_destructive" value="Destructive">
+                                                <label for="dosh_destructive">Destructive (विध्वंसकवृत्ती)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Looking down upon others"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_lookingdown"
+                                                    value="Looking down upon others">
+                                                <label for="dosh_lookingdown">Looking down upon others (दुसऱ्याला तुच्छ
+                                                    लेखणे)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Pointing mistakes of others"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_pointing"
+                                                    value="Pointing mistakes of others">
+                                                <label for="dosh_pointing">Pointing mistakes of others (इतरांच्या चुका
+                                                    शोधणे)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Criticism"
+                                                data-group="affecting-others">
+                                                <input type="checkbox" id="dosh_criticism" value="Criticism">
+                                                <label for="dosh_criticism">Criticizing others (टीका करणे)</label>
+                                            </div>
+
+                                            <div class="multi-select-group-label">Defects Affecting Self (स्वतःसाठी
+                                                त्रासदायक)</div>
+                                            <div class="multi-select-option" data-value="Egoistic"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_egoistic" value="Egoistic">
+                                                <label for="dosh_egoistic">Egoistic / Pride (अहंकार / गर्व)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Emotional"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_emotional" value="Emotional">
+                                                <label for="dosh_emotional">Emotionalism (भावविवशता)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Fearful"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_fearful" value="Fearful">
+                                                <label for="dosh_fearful">Fearful / Fear (भीती)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lying / Dishonesty"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_lying" value="Lying / Dishonesty">
+                                                <label for="dosh_lying">Lying / Dishonesty (खोटे बोलणे /
+                                                    अप्रामाणिकपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Suspicious"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_suspicious" value="Suspicious">
+                                                <label for="dosh_suspicious">Suspicious (संशयीवृत्ती)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Ungrateful"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_ungrateful" value="Ungrateful">
+                                                <label for="dosh_ungrateful">Ungrateful (कृतघ्नपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="No repentance"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_norepentance" value="No repentance">
+                                                <label for="dosh_norepentance">Lack of repentance (पश्चात्ताप न
+                                                    होणे)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of seriousness"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_lackseriousness"
+                                                    value="Lack of seriousness">
+                                                <label for="dosh_lackseriousness">Lack of seriousness (गांभीर्याचा
+                                                    अभाव)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of planning"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_lackplanning" value="Lack of planning">
+                                                <label for="dosh_lackplanning">Lack of planning (नियोजनाचा अभाव)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Forgetful"
+                                                data-group="affecting-self">
+                                                <input type="checkbox" id="dosh_forgetful" value="Forgetful">
+                                                <label for="dosh_forgetful">Forgetful (विसरभोळेपणा)</label>
+                                            </div>
+
+                                            <div class="multi-select-group-label">Operational & Behavioral (कृती आणि
+                                                वर्तन)</div>
+                                            <div class="multi-select-option" data-value="Laziness"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_laziness" value="Laziness">
+                                                <label for="dosh_laziness">Laziness (आळस)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Hasty" data-group="behavioral">
+                                                <input type="checkbox" id="dosh_hasty" value="Hasty">
+                                                <label for="dosh_hasty">Hasty / Impatient (घाईघाईने करणे /
+                                                    उतावळेपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Carelessness"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_carelessness" value="Carelessness">
+                                                <label for="dosh_carelessness">Carelessness (निष्काळजीपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Irresponsible"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_irresponsible" value="Irresponsible">
+                                                <label for="dosh_irresponsible">Irresponsible (बेजबाबदारपणा)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Disobedience"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_disobedience" value="Disobedience">
+                                                <label for="dosh_disobedience">Disobedience (अवज्ञा करणे)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Talking unnecessarily"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_talking" value="Talking unnecessarily">
+                                                <label for="dosh_talking">Talking unnecessarily (विनाकारण बोलणे)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Narrow-mindedness"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_narrowminded" value="Narrow-mindedness">
+                                                <label for="dosh_narrowminded">Narrow-minded (संकुचितवृत्ती)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Poor decision making"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_poordecision"
+                                                    value="Poor decision making">
+                                                <label for="dosh_poordecision">Poor decision making (निर्णयक्षमतेचा
+                                                    अभाव)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lacking confidence"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_lackconfidence"
+                                                    value="Lacking confidence">
+                                                <label for="dosh_lackconfidence">Lacking confidence (आत्मविश्वासाचा
+                                                    अभाव)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Overspending"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_overspending" value="Overspending">
+                                                <label for="dosh_overspending">Overspending (उधळपट्टी)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Not systematic"
+                                                data-group="behavioral">
+                                                <input type="checkbox" id="dosh_notsystematic" value="Not systematic">
+                                                <label for="dosh_notsystematic">Not being systematic
+                                                    (अव्यवस्थितपणा)</label>
+                                            </div>
+
+                                            <div class="multi-select-option" data-value="Others" data-group="other">
+                                                <input type="checkbox" id="dosh_others" value="Others">
+                                                <label for="dosh_others">Others (इतर)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-slate-500 mt-1.5 italic">💡 Click to open, search, and select
+                                    multiple defects</p>
+                            </div>
+                            <div>
+                                <label for="wrongThingsInput"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Description</label>
+                                <textarea id="wrongThingsInput" required placeholder="Describe the incident..."
+                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border h-32 resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"></textarea>
+                            </div>
+                            <button type="submit" id="wrongSubmitBtn"
+                                class="w-full bg-slate-900 text-white py-4 rounded-xl hover:bg-red-600 font-bold shadow-lg transition-all hover:-translate-y-1 active:scale-95 mt-2">Save
+                                Mistake</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b border-slate-50 flex justify-between items-center">
+                            <span class="font-bold text-slate-800">History Log</span>
+                            <div class="relative w-48">
+                                <input type="text" id="searchWrongLogs" placeholder="Search logs..."
+                                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <tbody id="wrongTableBody" class="divide-y divide-slate-50"></tbody>
+                            </table>
+                            <div id="wrongEmpty" class="hidden p-20 text-center text-slate-600 italic">No entries yet.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DECISION PAGE -->
+        <div id="page-decision" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <header class="mb-8">
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">Right Decision</h2>
+                <p class="text-slate-600 text-sm">Correcting mistakes with awareness</p>
+            </header>
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5">
+                    <div class="bg-white px-6 pt-6 pb-8 rounded-3xl shadow-xl border border-slate-100 h-fit">
+                        <h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span
+                                class="w-2 h-6 bg-blue-600 rounded-full"></span> Document Decision</h2>
+                        <form id="decisionForm" class="space-y-4">
+                            <input type="hidden" id="decisionEditId">
+                            <div>
+                                <label for="wrongThingSelector"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Select Wrong
+                                    Thing</label>
+                                <div class="custom-select-container relative">
+                                    <div id="wrongThingTrigger"
+                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex justify-between items-center cursor-pointer min-h-[46px]">
+                                        <span class="text-slate-500">-- Choose from History --</span>
+                                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                    <input type="hidden" id="wrongThingSelector" required>
+
+                                    <div id="wrongThingDropdown"
+                                        class="hidden absolute z-20 w-full mt-1 bg-white border border-slate-100 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+                                        <div class="p-2 sticky top-0 bg-white border-b border-slate-50">
+                                            <input type="text" id="wrongThingSearch" placeholder="Search history..."
+                                                class="w-full p-2 text-xs bg-slate-50 rounded-lg border-none outline-none focus:ring-1 focus:ring-blue-500">
+                                        </div>
+                                        <div id="wrongThingOptions" class="py-1">
+                                            <!-- Options populated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="decisionInput"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Right
+                                    Decision</label>
+                                <textarea id="decisionInput" required
+                                    placeholder="What is the correct perspective/action?"
+                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border h-32 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"></textarea>
+                            </div>
+                            <button type="submit" id="decisionSubmitBtn"
+                                class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 font-bold shadow-lg transition-all hover:-translate-y-1 active:scale-95 mt-2">Save
+                                Decision</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b border-slate-50 flex justify-between items-center">
+                            <span class="font-bold text-slate-800">Decision History</span>
+                            <div class="relative w-48">
+                                <input type="text" id="searchDecisionLogs" placeholder="Search logs..."
+                                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <tbody id="decisionTableBody" class="divide-y divide-slate-50"></tbody>
+                            </table>
+                            <div id="decisionEmpty" class="hidden p-20 text-center text-slate-600 italic">No decisions
+                                logged yet.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS PAGE -->
+        <div id="page-results" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <header class="mb-8">
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">Results & Change</h2>
+                <p class="text-slate-600 text-sm">Observing the internal shift after implementation</p>
+            </header>
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5">
+                    <div class="bg-white px-6 pt-6 pb-8 rounded-3xl shadow-xl border border-slate-100 h-fit">
+                        <h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span
+                                class="w-2 h-6 bg-emerald-500 rounded-full"></span> Log Outcome</h2>
+                        <form id="resultForm" class="space-y-4">
+                            <input type="hidden" id="resultEditId">
+                            <div>
+                                <label for="decisionSelector"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Select Decision
+                                    Taken</label>
+                                <select id="decisionSelector" required
+                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                                    <option value="">-- Choose from Decisions --</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="resultInput"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Result / Change
+                                    Observed</label>
+                                <textarea id="resultInput" required
+                                    placeholder="What internal or external change did you feel after acting on the decision?"
+                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border h-32 resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"></textarea>
+                            </div>
+                            <button type="submit" id="resultSubmitBtn"
+                                class="w-full bg-emerald-600 text-white py-4 rounded-xl hover:bg-emerald-700 font-bold shadow-lg transition-all hover:-translate-y-1 active:scale-95 mt-2">Save
+                                Result</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b border-slate-50 flex justify-between items-center">
+                            <span class="font-bold text-slate-800">Transformation Log</span>
+                            <div class="relative w-48">
+                                <input type="text" id="searchResultLogs" placeholder="Search logs..."
+                                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <tbody id="resultsTableBody" class="divide-y divide-slate-50"></tbody>
+                            </table>
+                            <div id="resultsEmpty" class="hidden p-20 text-center text-slate-600 italic">No results
+                                documented yet.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast"
+        class="fixed bottom-6 right-6 px-6 py-3 bg-slate-900 text-white rounded-2xl text-sm font-bold shadow-2xl opacity-0 transition-all translate-y-10 pointer-events-none z-[70]">
+    </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,mr,gu,kn,ta',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" async
+        src="https://translate.googleapis.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        const STORAGE_WRONG = 'ss_wrong_logs_v2';
+        const STORAGE_DECISION = 'ss_decision_logs_v2';
+        const STORAGE_RESULT = 'ss_result_logs_v2';
+        const LANG_KEY = 'ss_preferred_lang';
+
+        let wrongLogs = JSON.parse(localStorage.getItem(STORAGE_WRONG)) || [];
+        let decisionLogs = JSON.parse(localStorage.getItem(STORAGE_DECISION)) || [];
+        let resultLogs = JSON.parse(localStorage.getItem(STORAGE_RESULT)) || [];
+
+        // --- Navigation Logic ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page-content');
+
+        navLinks.forEach(link => {
+            link.onclick = () => {
+                const targetId = link.id.replace('nav-', 'page-');
+
+                // Only act if tab changed
+                if (document.getElementById(targetId).classList.contains('active')) return;
+
+                navLinks.forEach(l => l.classList.remove('active-tab'));
+                link.classList.add('active-tab');
+                pages.forEach(p => p.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+
+                // On-demand rendering when switching tabs
+                if (targetId === 'page-decision') {
+                    populateWrongSelector();
+                    renderDecisions();
+                }
+                if (targetId === 'page-results') {
+                    populateDecisionSelector();
+                    renderResults();
+                }
+            };
+        });
+
+        // --- Custom Multi-Select Dropdown Logic ---
+        const doshTrigger = document.getElementById('doshTrigger');
+        const doshDropdown = document.getElementById('doshDropdown');
+        const doshSearch = document.getElementById('doshSearch');
+        const doshOptions = document.querySelectorAll('.multi-select-option input[type="checkbox"]');
+        let selectedDoshValues = [];
+
+        // Toggle dropdown
+        doshTrigger.onclick = (e) => {
+            e.stopPropagation();
+            doshDropdown.classList.toggle('active');
+            if (doshDropdown.classList.contains('active')) {
+                doshSearch.focus();
+            }
+        };
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!doshTrigger.contains(e.target) && !doshDropdown.contains(e.target)) {
+                doshDropdown.classList.remove('active');
+            }
+        });
+
+        // Search functionality
+        doshSearch.oninput = (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.multi-select-option').forEach(option => {
+                const label = option.querySelector('label').textContent.toLowerCase();
+                if (label.includes(searchTerm)) {
+                    option.classList.remove('hidden');
+                } else {
+                    option.classList.add('hidden');
+                }
+            });
+        };
+
+        // Handle checkbox selection
+        doshOptions.forEach(checkbox => {
+            checkbox.onchange = () => {
+                updateSelectedDosh();
+                renderDoshBadges();
+            };
+        });
+
+        function updateSelectedDosh() {
+            selectedDoshValues = Array.from(doshOptions)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+        }
+
+        function renderDoshBadges() {
+            const placeholder = doshTrigger.querySelector('.multi-select-placeholder');
+            const badges = doshTrigger.querySelectorAll('.selected-badge');
+
+            // Remove existing badges
+            badges.forEach(badge => badge.remove());
+
+            if (selectedDoshValues.length === 0) {
+                if (!placeholder) {
+                    const span = document.createElement('span');
+                    span.className = 'multi-select-placeholder';
+                    span.textContent = 'Click to select defects...';
+                    doshTrigger.appendChild(span);
+                }
+            } else {
+                // Remove placeholder
+                if (placeholder) placeholder.remove();
+
+                // Add badges
+                selectedDoshValues.forEach(value => {
+                    const badge = document.createElement('span');
+                    badge.className = 'selected-badge';
+                    badge.innerHTML = `
+                        ${value}
+                        <button type="button" onclick="removeDosh('${value.replace(/'/g, "\\'")}')">×</button>
+                    `;
+                    doshTrigger.appendChild(badge);
+                });
+            }
+        }
+
+        window.removeDosh = (value) => {
+            const checkbox = Array.from(doshOptions).find(cb => cb.value === value);
+            if (checkbox) {
+                checkbox.checked = false;
+                updateSelectedDosh();
+                renderDoshBadges();
+            }
+        };
+
+        function getSelectedDosh() {
+            return selectedDoshValues;
+        }
+
+        function setSelectedDosh(values) {
+            // Uncheck all first
+            doshOptions.forEach(cb => cb.checked = false);
+
+            // Check the selected ones
+            const valuesArray = Array.isArray(values) ? values : (values ? [values] : []);
+            valuesArray.forEach(value => {
+                const checkbox = Array.from(doshOptions).find(cb => cb.value === value);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            updateSelectedDosh();
+            renderDoshBadges();
+        }
+
+        function clearDoshSelection() {
+            doshOptions.forEach(cb => cb.checked = false);
+            selectedDoshValues = [];
+            renderDoshBadges();
+        }
+
+        // --- Wrong Things Logic ---
+        const wrongForm = document.getElementById('wrongForm');
+        wrongForm.onsubmit = (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('wrongEditId').value;
+            const selectedDosh = getSelectedDosh(); // Use custom dropdown function
+
+            if (selectedDosh.length === 0) {
+                showToast("Please select at least one personality defect");
+                return;
+            }
+
+            const data = {
+                id: editId || Date.now().toString(),
+                Date: document.getElementById('wrongDateInput').value,
+                Time: document.getElementById('wrongTimeInput').value,
+                Dosh: selectedDosh, // Now an array from custom dropdown
+                WrongThings: document.getElementById('wrongThingsInput').value
+            };
+
+            if (editId) {
+                const index = wrongLogs.findIndex(l => l.id === editId);
+                if (index !== -1) wrongLogs[index] = data;
+                document.getElementById('wrongEditId').value = '';
+                document.getElementById('wrongSubmitBtn').textContent = 'Save Mistake';
+                showToast("Mistake updated");
+            } else {
+                wrongLogs.push(data);
+                showToast("Mistake recorded");
+            }
+
+            localStorage.setItem(STORAGE_WRONG, JSON.stringify(wrongLogs));
+            renderWrong();
+            wrongForm.reset();
+            clearDoshSelection(); // Clear custom dropdown
+            const now = new Date();
+            document.getElementById('wrongDateInput').valueAsDate = now;
+            document.getElementById('wrongTimeInput').value = now.toTimeString().slice(0, 5);
+        };
+
+        // Initialize Search Listeners
+        document.getElementById('searchWrongLogs').addEventListener('input', () => renderWrong());
+        document.getElementById('searchDecisionLogs').addEventListener('input', () => renderDecisions());
+        document.getElementById('searchResultLogs').addEventListener('input', () => renderResults());
+
+        function renderWrong(showAll = false) {
+            const container = document.getElementById('wrongTableBody');
+            const empty = document.getElementById('wrongEmpty');
+            const searchTerm = document.getElementById('searchWrongLogs').value.toLowerCase();
+
+            container.innerHTML = '';
+
+            // Filter
+            const filteredLogs = wrongLogs.filter(log => {
+                if (!searchTerm) return true;
+                const doshStr = Array.isArray(log.Dosh) ? log.Dosh.join(' ') : (log.Dosh || '');
+                return log.WrongThings.toLowerCase().includes(searchTerm) ||
+                    doshStr.toLowerCase().includes(searchTerm) ||
+                    log.Date.includes(searchTerm);
+            });
+
+            // Sort
+            filteredLogs.sort((a, b) => {
+                const valA = a.Date + (a.Time || '00:00');
+                const valB = b.Date + (b.Time || '00:00');
+                return valB.localeCompare(valA);
+            });
+
+            if (filteredLogs.length === 0) {
+                empty.classList.remove('hidden');
+                empty.textContent = searchTerm ? 'No matching records found.' : 'No entries yet.';
+                return;
+            }
+
+            empty.classList.add('hidden');
+            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+            const fragment = document.createDocumentFragment();
+
+            displayLogs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-50";
+
+                // Handle both old single-value and new array format
+                const doshArray = Array.isArray(log.Dosh) ? log.Dosh : (log.Dosh ? [log.Dosh] : []);
+                const doshBadges = doshArray.length > 0
+                    ? doshArray.map(d => `<span class="inline-block bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-[9px] font-bold mr-1 mb-1">${d}</span>`).join('')
+                    : '<span class="text-slate-400 text-[10px]">Uncategorized</span>';
+
+                tr.innerHTML = `<td class="px-6 py-4 w-32">
+                        <div class="text-xs font-bold text-slate-600">${log.Date}</div>
+                        <div class="text-[10px] text-slate-600 font-medium">${log.Time || ''}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="mb-2">${doshBadges}</div>
+                        <div class="text-sm text-slate-700 font-medium">${log.WrongThings}</div>
+                    </td>
+                    <td class="px-6 py-4 text-right w-24">
+                        <div class="flex justify-end gap-3">
+                            <button onclick="editEntry('wrong', '${log.id}')" class="text-slate-400 hover:text-blue-500 transition-colors">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            </button>
+                            <button onclick="deleteEntry('wrong', '${log.id}')" class="text-slate-400 hover:text-red-500 transition-colors">✕</button>
+                        </div>
+                    </td>`;
+                fragment.appendChild(tr);
+            });
+
+            if (!showAll && wrongLogs.length > 50) {
+                const moreTr = document.createElement('tr');
+                moreTr.innerHTML = `<td colspan="3" class="px-6 py-4 text-center">
+                    <button onclick="renderWrong(true)" class="text-blue-600 text-sm font-bold hover:underline">Show ${wrongLogs.length - 50} more entries...</button>
+                </td>`;
+                fragment.appendChild(moreTr);
+            }
+            container.appendChild(fragment);
+        }
+
+        // --- Decision Logic ---
+        const decisionForm = document.getElementById('decisionForm');
+        // Custom Wrong Thing Dropdown Logic
+        const wtTrigger = document.getElementById('wrongThingTrigger');
+        const wtDropdown = document.getElementById('wrongThingDropdown');
+        const wtInput = document.getElementById('wrongThingSelector');
+        const wtSearch = document.getElementById('wrongThingSearch');
+
+        wtTrigger.onclick = (e) => {
+            e.stopPropagation();
+            populateWrongSelector(); // Ensure up to date
+            wtDropdown.classList.toggle('hidden');
+            if (!wtDropdown.classList.contains('hidden')) {
+                wtSearch.value = '';
+                wtSearch.focus();
+                // Reset search visibility
+                const options = document.getElementById('wrongThingOptions').children;
+                Array.from(options).forEach(opt => opt.classList.remove('hidden'));
+            }
+        };
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!wtTrigger.contains(e.target) && !wtDropdown.contains(e.target)) {
+                wtDropdown.classList.add('hidden');
+            }
+        });
+
+        wtSearch.oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            const options = document.getElementById('wrongThingOptions').children;
+            Array.from(options).forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(term)) opt.classList.remove('hidden');
+                else opt.classList.add('hidden');
+            });
+        };
+
+        function populateWrongSelector() {
+            const container = document.getElementById('wrongThingOptions');
+            container.innerHTML = '';
+
+            if (wrongLogs.length === 0) {
+                container.innerHTML = '<div class="p-3 text-xs text-slate-500 italic">No mistakes logged yet.</div>';
+                return;
+            }
+
+            wrongLogs.forEach(log => {
+                const div = document.createElement('div');
+                div.className = 'px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 whitespace-normal';
+                div.innerHTML = `<span class="font-bold text-xs text-slate-500 block mb-1">[${log.Date}]</span> ${log.WrongThings}`;
+                div.onclick = () => {
+                    wtInput.value = log.id;
+                    const span = wtTrigger.querySelector('span');
+                    span.textContent = `[${log.Date}] ${log.WrongThings.substring(0, 50)}${log.WrongThings.length > 50 ? '...' : ''}`;
+                    span.classList.remove('text-slate-500');
+                    span.classList.add('text-slate-800');
+                    wtDropdown.classList.add('hidden');
+                };
+                container.appendChild(div);
+            });
+        }
+
+        decisionForm.onsubmit = (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('decisionEditId').value;
+            const wrongId = document.getElementById('wrongThingSelector').value;
+            const wrongEntry = wrongLogs.find(l => l.id === wrongId);
+            const data = {
+                id: editId || Date.now().toString(),
+                wrongId,
+                wrongText: wrongEntry.WrongThings,
+                decision: document.getElementById('decisionInput').value,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            if (editId) {
+                const index = decisionLogs.findIndex(l => l.id === editId);
+                if (index !== -1) decisionLogs[index] = data;
+                document.getElementById('decisionEditId').value = '';
+                document.getElementById('decisionSubmitBtn').textContent = 'Save Decision';
+                showToast("Decision updated");
+            } else {
+                decisionLogs.push(data);
+                showToast("Decision logged");
+            }
+
+            localStorage.setItem(STORAGE_DECISION, JSON.stringify(decisionLogs));
+            renderDecisions();
+            decisionForm.reset();
+        };
+
+        function renderDecisions(showAll = false) {
+            const container = document.getElementById('decisionTableBody');
+            const empty = document.getElementById('decisionEmpty');
+            const searchTerm = document.getElementById('searchDecisionLogs').value.toLowerCase();
+
+            container.innerHTML = '';
+
+            // Filter
+            const filteredLogs = decisionLogs.filter(log => {
+                if (!searchTerm) return true;
+                return log.decision.toLowerCase().includes(searchTerm) ||
+                    (log.wrongText && log.wrongText.toLowerCase().includes(searchTerm));
+            });
+
+            // Sort (Newest Date First)
+            filteredLogs.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+            if (filteredLogs.length === 0) {
+                empty.classList.remove('hidden');
+                empty.textContent = searchTerm ? 'No matching decisions found.' : 'No decisions logged yet.';
+                return;
+            }
+
+            empty.classList.add('hidden');
+            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+            const fragment = document.createDocumentFragment();
+
+            displayLogs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-50";
+                tr.innerHTML = `<td class="px-6 py-4">
+                    <div class="text-[10px] text-red-600 uppercase font-bold">Mistake:</div>
+                    <div class="text-xs text-slate-600 italic mb-2">"${log.wrongText}"</div>
+                    <div class="text-sm font-medium text-slate-800">${log.decision}</div>
+                </td>
+                <td class="px-6 py-4 text-right w-24">
+                    <div class="flex justify-end gap-3">
+                        <button onclick="editEntry('decision', '${log.id}')" class="text-slate-400 hover:text-blue-500 transition-colors">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </button>
+                        <button onclick="deleteEntry('decision', '${log.id}')" class="text-slate-400 hover:text-red-500 transition-colors">✕</button>
+                    </div>
+                </td>`;
+                fragment.appendChild(tr);
+            });
+
+            if (!showAll && decisionLogs.length > 50) {
+                const moreTr = document.createElement('tr');
+                moreTr.innerHTML = `<td colspan="2" class="px-6 py-4 text-center">
+                    <button onclick="renderDecisions(true)" class="text-blue-600 text-sm font-bold hover:underline">Show all decisions...</button>
+                </td>`;
+                fragment.appendChild(moreTr);
+            }
+            container.appendChild(fragment);
+        }
+
+        // --- Results Logic ---
+        const resultForm = document.getElementById('resultForm');
+        function populateDecisionSelector() {
+            const sel = document.getElementById('decisionSelector');
+            const val = sel.value;
+            sel.innerHTML = '<option value="">-- Choose from Decisions --</option>';
+            decisionLogs.forEach(log => {
+                const opt = document.createElement('option');
+                opt.value = log.id;
+                opt.textContent = log.decision;
+                sel.appendChild(opt);
+            });
+            sel.value = val;
+        }
+
+        resultForm.onsubmit = (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('resultEditId').value;
+            const decisionId = document.getElementById('decisionSelector').value;
+            const decisionEntry = decisionLogs.find(l => l.id === decisionId);
+            const data = {
+                id: editId || Date.now().toString(),
+                decisionId,
+                decisionText: decisionEntry.decision,
+                result: document.getElementById('resultInput').value,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            if (editId) {
+                const index = resultLogs.findIndex(l => l.id === editId);
+                if (index !== -1) resultLogs[index] = data;
+                document.getElementById('resultEditId').value = '';
+                document.getElementById('resultSubmitBtn').textContent = 'Save Result';
+                showToast("Result updated");
+            } else {
+                resultLogs.push(data);
+                showToast("Result recorded");
+            }
+
+            localStorage.setItem(STORAGE_RESULT, JSON.stringify(resultLogs));
+            renderResults();
+            resultForm.reset();
+        };
+
+        function renderResults(showAll = false) {
+            const container = document.getElementById('resultsTableBody');
+            const empty = document.getElementById('resultsEmpty');
+            const searchTerm = document.getElementById('searchResultLogs').value.toLowerCase();
+
+            container.innerHTML = '';
+
+            // Filter
+            const filteredLogs = resultLogs.filter(log => {
+                if (!searchTerm) return true;
+                return log.result.toLowerCase().includes(searchTerm) ||
+                    (log.decisionText && log.decisionText.toLowerCase().includes(searchTerm));
+            });
+
+            // Sort (Newest Date First)
+            filteredLogs.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+            if (filteredLogs.length === 0) {
+                empty.classList.remove('hidden');
+                empty.textContent = searchTerm ? 'No matching results found.' : 'No results documented yet.';
+                return;
+            }
+
+            empty.classList.add('hidden');
+            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+            const fragment = document.createDocumentFragment();
+
+            displayLogs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-50";
+                tr.innerHTML = `<td class="px-6 py-4">
+                    <div class="text-[10px] text-blue-600 uppercase font-bold">Decision:</div>
+                    <div class="text-xs text-slate-600 italic mb-2">"${log.decisionText}"</div>
+                    <div class="text-sm font-bold text-emerald-700">${log.result}</div>
+                </td>
+                <td class="px-6 py-4 text-right w-24">
+                    <div class="flex justify-end gap-3">
+                        <button onclick="editEntry('result', '${log.id}')" class="text-slate-400 hover:text-blue-500 transition-colors">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </button>
+                        <button onclick="deleteEntry('result', '${log.id}')" class="text-slate-400 hover:text-red-500 transition-colors">✕</button>
+                    </div>
+                </td>`;
+                fragment.appendChild(tr);
+            });
+
+            if (!showAll && resultLogs.length > 50) {
+                const moreTr = document.createElement('tr');
+                moreTr.innerHTML = `<td colspan="2" class="px-6 py-4 text-center">
+                    <button onclick="renderResults(true)" class="text-blue-600 text-sm font-bold hover:underline">Show all results...</button>
+                </td>`;
+                fragment.appendChild(moreTr);
+            }
+            container.appendChild(fragment);
+        }
+
+        // --- General ---
+        window.editEntry = (type, id) => {
+            if (type === 'wrong') {
+                const log = wrongLogs.find(l => l.id === id);
+                if (!log) return;
+                document.getElementById('wrongEditId').value = log.id;
+                document.getElementById('wrongDateInput').value = log.Date;
+                document.getElementById('wrongTimeInput').value = log.Time;
+
+                // Handle multi-select restoration with custom dropdown
+                const doshArray = Array.isArray(log.Dosh) ? log.Dosh : (log.Dosh ? [log.Dosh] : []);
+                setSelectedDosh(doshArray); // Use custom dropdown function
+
+                document.getElementById('wrongThingsInput').value = log.WrongThings;
+                document.getElementById('wrongSubmitBtn').textContent = 'Update Mistake';
+                document.getElementById('page-wrong').scrollIntoView({ behavior: 'smooth' });
+            } else if (type === 'decision') {
+                const log = decisionLogs.find(l => l.id === id);
+                if (!log) return;
+                document.getElementById('decisionEditId').value = log.id;
+                populateWrongSelector();
+                document.getElementById('wrongThingSelector').value = log.wrongId;
+
+                // Update trigger text for custom dropdown
+                const wrongEntry = wrongLogs.find(w => w.id === log.wrongId);
+                if (wrongEntry) {
+                    const span = document.getElementById('wrongThingTrigger').querySelector('span');
+                    span.textContent = `[${wrongEntry.Date}] ${wrongEntry.WrongThings.substring(0, 50)}...`;
+                    span.classList.remove('text-slate-500');
+                    span.classList.add('text-slate-800');
+                }
+
+                document.getElementById('decisionInput').value = log.decision;
+                document.getElementById('decisionSubmitBtn').textContent = 'Update Decision';
+                document.getElementById('page-decision').scrollIntoView({ behavior: 'smooth' });
+            } else if (type === 'result') {
+                const log = resultLogs.find(l => l.id === id);
+                if (!log) return;
+                document.getElementById('resultEditId').value = log.id;
+                populateDecisionSelector();
+                document.getElementById('decisionSelector').value = log.decisionId;
+                document.getElementById('resultInput').value = log.result;
+                document.getElementById('resultSubmitBtn').textContent = 'Update Result';
+                document.getElementById('page-results').scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        window.deleteEntry = (type, id) => {
+            if (!confirm("Delete this entry?")) return;
+            if (type === 'wrong') {
+                wrongLogs = wrongLogs.filter(l => l.id !== id);
+                localStorage.setItem(STORAGE_WRONG, JSON.stringify(wrongLogs));
+                renderWrong();
+            } else if (type === 'decision') {
+                decisionLogs = decisionLogs.filter(l => l.id !== id);
+                localStorage.setItem(STORAGE_DECISION, JSON.stringify(decisionLogs));
+                renderDecisions();
+            } else {
+                resultLogs = resultLogs.filter(l => l.id !== id);
+                localStorage.setItem(STORAGE_RESULT, JSON.stringify(resultLogs));
+                renderResults();
+            }
+        };
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.replace('opacity-0', 'opacity-100');
+            t.classList.replace('translate-y-10', 'translate-y-0');
+            setTimeout(() => {
+                t.classList.replace('opacity-100', 'opacity-0');
+                t.classList.replace('translate-y-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        document.getElementById('exportAllBtn').onclick = async () => {
+            if (typeof XLSX === 'undefined') {
+                showToast("Loading Export Engine...");
+                try {
+                    await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+                        script.onload = resolve;
+                        script.onerror = () => reject(new Error("Failed to load XLSX library"));
+                        document.head.appendChild(script);
+                    });
+                } catch (err) {
+                    showToast("Failed to load export library.");
+                    return;
+                }
+            }
+
+            // 1. Create Consolidated Master Sheet (Mistake -> Decision -> Result)
+            const consolidatedData = [];
+            wrongLogs.forEach(mistake => {
+                const mistakesDecisions = decisionLogs.filter(d => d.wrongId === mistake.id);
+
+                if (mistakesDecisions.length === 0) {
+                    const doshStr = Array.isArray(mistake.Dosh) ? mistake.Dosh.join(', ') : (mistake.Dosh || "-");
+                    consolidatedData.push({
+                        "Date": mistake.Date,
+                        "Time": mistake.Time,
+                        "Dosh": doshStr,
+                        "Mistake Description": mistake.WrongThings,
+                        "Right Decision": "Pending",
+                        "Outcome/Change": "Pending"
+                    });
+                } else {
+                    mistakesDecisions.forEach(decision => {
+                        const decisionResults = resultLogs.filter(r => r.decisionId === decision.id);
+
+                        if (decisionResults.length === 0) {
+                            const doshStr = Array.isArray(mistake.Dosh) ? mistake.Dosh.join(', ') : (mistake.Dosh || "-");
+                            consolidatedData.push({
+                                "Date": mistake.Date,
+                                "Time": mistake.Time,
+                                "Dosh": doshStr,
+                                "Mistake Description": mistake.WrongThings,
+                                "Right Decision": decision.decision,
+                                "Outcome/Change": "Pending"
+                            });
+                        } else {
+                            decisionResults.forEach(res => {
+                                const doshStr = Array.isArray(mistake.Dosh) ? mistake.Dosh.join(', ') : (mistake.Dosh || "-");
+                                consolidatedData.push({
+                                    "Date": mistake.Date,
+                                    "Time": mistake.Time,
+                                    "Dosh": doshStr,
+                                    "Mistake Description": mistake.WrongThings,
+                                    "Right Decision": decision.decision,
+                                    "Outcome/Change": res.result
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+
+            // 2. Individual Section Mappings
+            const exportMistakes = wrongLogs.map(l => {
+                const doshStr = Array.isArray(l.Dosh) ? l.Dosh.join(', ') : (l.Dosh || "-");
+                return {
+                    "Date": l.Date,
+                    "Time": l.Time,
+                    "Dosh": doshStr,
+                    "Mistake Description": l.WrongThings
+                };
+            });
+
+            const exportDecisions = decisionLogs.map(l => ({
+                "Original Mistake": l.wrongText,
+                "Right Decision": l.decision,
+                "Date Logged": l.date
+            }));
+
+            const exportResults = resultLogs.map(l => ({
+                "Applied Decision": l.decisionText,
+                "Outcome / Change": l.result,
+                "Date Logged": l.date
+            }));
+
+            const wb = XLSX.utils.book_new();
+
+            // Add Master Sheet first
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(consolidatedData), "Master Journey Log");
+
+            // Then individual sheets
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportMistakes), "1-All Mistakes History");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportDecisions), "2-All Decisions Taken");
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exportResults), "3-All Transformation Results");
+
+            // Download the file
+            XLSX.writeFile(wb, "Sanatan_Sanstha_Audit_Complete.xlsx");
+            showToast("Complete data exported to Excel!");
+        };
+
+        const modal = document.getElementById('settingsModal');
+        document.getElementById('menuBtn').onclick = () => modal.classList.remove('hidden');
+        document.getElementById('closeModal').onclick = () => modal.classList.add('hidden');
+        document.getElementById('modalOverlay').onclick = () => modal.classList.add('hidden');
+
+        document.getElementById('langSelect').onchange = (e) => {
+            const googleSelect = document.querySelector('.goog-te-combo');
+            if (googleSelect) {
+                googleSelect.value = e.target.value;
+                googleSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                localStorage.setItem(LANG_KEY, e.target.value);
+                showToast("Language updated");
+                modal.classList.add('hidden');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            document.getElementById('wrongDateInput').valueAsDate = now;
+            document.getElementById('wrongTimeInput').value = now.toTimeString().slice(0, 5);
+
+            // Initial render for active page only to improve TTI
+            renderWrong();
+
+            // Defer other renders to keep main thread free during initialization
+            setTimeout(() => {
+                renderDecisions();
+                renderResults();
+                initTranslate();
+            }, 500);
+        });
+
+        function initTranslate() {
+            const savedLang = localStorage.getItem(LANG_KEY);
+            if (savedLang) {
+                document.getElementById('langSelect').value = savedLang;
+                const check = setInterval(() => {
+                    const sel = document.querySelector('.goog-te-combo');
+                    if (sel) {
+                        sel.value = savedLang;
+                        sel.dispatchEvent(new Event('change', { bubbles: true }));
+                        clearInterval(check);
+                    }
+                }, 100);
+                setTimeout(() => clearInterval(check), 5000);
+            }
+        }
+    </script>
+</body>
+
+</html>
