@@ -222,11 +222,38 @@
 
 <body class="text-slate-900">
     <div id="google_translate_element"></div>
+    <!-- Background Audio Element -->
+    <!-- REPLACE 'your-song.mp3' WITH YOUR ACTUAL SONG FILE NAME OR URL -->
+    <audio id="bgMusic" loop>
+        <source src="Datta_T.mp3" type="audio/mp3">
+    </audio>
 
     <!-- Top Navigation Bar -->
     <nav class="nav-primary border-b border-orange-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="w-10"></div>
+            <div class="flex items-center gap-2 group relative"
+                title="श्री गुरुदेव दत्त नामजप चालू/बंद करण्यासाठी लोगोवर क्लिक करा">
+                <!-- Audio Toggle Button -->
+                <button id="audioBtn" class="p-2 rounded-full text-orange-800 hover:bg-orange-200/50 transition-colors"
+                    aria-label="Toggle Music">
+                    <!-- Muted Icon (Default) -->
+                    <svg id="icon-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <!-- Playing/Volume Icon (Hidden) -->
+                    <svg id="icon-playing" class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                </button>
+                <span id="audioLabel" class="text-xs font-bold text-orange-800">
+                    श्री गुरुदेव दत्त
+                </span>
+            </div>
             <h1 class="text-2xl font-bold text-orange-800 tracking-wide uppercase notranslate">सनातन साधना</h1>
             <button id="menuBtn" class="p-2 hover:bg-orange-200/50 rounded-full transition-colors"
                 aria-label="Open Menu">
@@ -586,6 +613,18 @@
                                     निवडा</p>
                             </div>
                             <div>
+                                <label for="wrongClassificationInput"
+                                    class="block text-xs font-bold text-slate-600 uppercase mb-1.5">वर्गिकरण
+                                </label>
+                                <select id="wrongClassificationInput"
+                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none">
+                                    <option value="">वर्गिकरण निवडा...</option>
+                                    <option value="स्वत:">स्वत:</option>
+                                    <option value="साधक">साधक</option>
+                                    <option value="इतर">इतर</option>
+                                </select>
+                            </div>
+                            <div>
                                 <label for="wrongThingsInput"
                                     class="block text-xs font-bold text-slate-600 uppercase mb-1.5">प्रसंग /
                                     वर्णन</label>
@@ -664,6 +703,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div id="wrongThingPreview" class="hidden"></div>
                             </div>
                             <div>
                                 <label for="decisionInput"
@@ -983,9 +1023,11 @@
                 id: editId || Date.now().toString(),
                 Date: document.getElementById('wrongDateInput').value,
                 Time: document.getElementById('wrongTimeInput').value,
-                Dosh: selectedDosh, // Now an array from custom dropdown
+                Dosh: selectedDosh,
+                Classification: document.getElementById('wrongClassificationInput').value,
                 WrongThings: document.getElementById('wrongThingsInput').value
             };
+
 
             if (editId) {
                 const index = wrongLogs.findIndex(l => l.id === editId);
@@ -1005,6 +1047,7 @@
             const now = new Date();
             document.getElementById('wrongDateInput').valueAsDate = now;
             document.getElementById('wrongTimeInput').value = now.toTimeString().slice(0, 5);
+            document.getElementById('wrongClassificationInput').value = '';
         };
 
         // Initialize Search Listeners
@@ -1022,9 +1065,11 @@
             // Filter
             const filteredLogs = wrongLogs.filter(log => {
                 if (!searchTerm) return true;
+                if (!searchTerm) return true;
                 const doshStr = Array.isArray(log.Dosh) ? log.Dosh.join(' ') : (log.Dosh || '');
                 return log.WrongThings.toLowerCase().includes(searchTerm) ||
                     doshStr.toLowerCase().includes(searchTerm) ||
+                    (log.Classification && log.Classification.toLowerCase().includes(searchTerm)) ||
                     log.Date.includes(searchTerm);
             });
 
@@ -1069,7 +1114,10 @@
                         <div class="text-xs font-bold text-slate-700 font-mono bg-slate-100 inline-block px-1.5 py-0.5 rounded">${log.Time || '--:--'}</div>
                     </td>
                     <td class="px-2 md:px-6 py-3 md:py-4 align-top">
-                        <div class="mb-2">${doshBadges}</div>
+                        <div class="mb-2">
+                            ${doshBadges}
+                            ${log.Classification ? `<span class="inline-block bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-[9px] font-bold mr-1 mb-1 shadow-sm border border-slate-300">${log.Classification}</span>` : ''}
+                        </div>
                         <div class="text-sm text-slate-700 font-medium break-all whitespace-pre-wrap leading-relaxed">${getExpandableText(log.WrongThings, 'w-' + log.id)}</div>
                     </td>
                     <td class="px-2 md:px-6 py-3 md:py-4 text-right w-16 md:w-24 align-top">
@@ -1151,6 +1199,7 @@
                     span.classList.remove('text-slate-500');
                     span.classList.add('text-slate-800');
                     wtDropdown.classList.add('hidden');
+                    updateWrongPreview(log.id);
                 };
                 container.appendChild(div);
             });
@@ -1183,7 +1232,42 @@
             localStorage.setItem(STORAGE_DECISION, JSON.stringify(decisionLogs));
             renderDecisions();
             decisionForm.reset();
+            updateWrongPreview(null);
         };
+
+        function updateWrongPreview(logId) {
+            const preview = document.getElementById('wrongThingPreview');
+            if (!logId) {
+                preview.innerHTML = '';
+                preview.classList.add('hidden');
+                return;
+            }
+            const log = wrongLogs.find(l => l.id === logId);
+            if (!log) {
+                preview.classList.add('hidden');
+                return;
+            }
+
+            const doshArray = Array.isArray(log.Dosh) ? log.Dosh : (log.Dosh ? [log.Dosh] : []);
+            const doshBadges = doshArray.length > 0
+                ? doshArray.map(d => `<span class="inline-block bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-[9px] font-bold mr-1 mb-1 shadow-sm">${d}</span>`).join('')
+                : '<span class="text-slate-400 text-[10px]">Uncategorized</span>';
+
+            preview.innerHTML = `
+                <div class="mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 shadow-inner">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">निवडलेली चूक माहिती:</span>
+                        <div class="text-[10px] font-mono text-slate-600 bg-white px-1.5 py-0.5 rounded border border-slate-100 flex gap-2">
+                             <span>📅 ${log.Date}</span>
+                             <span>⏰ ${log.Time || '--:--'}</span>
+                        </div>
+                    </div>
+                    <div class="mb-2 flex flex-wrap">${doshBadges}</div>
+                    <p class="text-xs text-slate-600 italic leading-relaxed break-all whitespace-pre-wrap border-l-2 border-red-200 pl-3">"${log.WrongThings}"</p>
+                </div>
+            `;
+            preview.classList.remove('hidden');
+        }
 
         function renderDecisions(showAll = false) {
             const container = document.getElementById('decisionTableBody');
@@ -1217,15 +1301,26 @@
                 if (log.date !== lastDate) {
                     const dateHeader = document.createElement('tr');
                     dateHeader.className = "bg-slate-50/50";
-                    dateHeader.innerHTML = `<td colspan="2" class="px-6 py-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest bg-slate-100/50Sticky top-0">${log.date || 'तारीख उपलब्ध नाही'}</td>`;
+                    dateHeader.innerHTML = `<td colspan="2" class="px-6 py-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest bg-slate-100/50 sticky top-0">${log.date || 'तारीख उपलब्ध नाही'}</td>`;
                     fragment.appendChild(dateHeader);
                     lastDate = log.date;
                 }
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 border-b border-slate-50 group";
+
+                // Find original Dosh for context
+                const originalWrong = wrongLogs.find(w => w.id === log.wrongId);
+                const doshArray = originalWrong ? (Array.isArray(originalWrong.Dosh) ? originalWrong.Dosh : [originalWrong.Dosh]) : [];
+                const doshBadges = doshArray.length > 0
+                    ? doshArray.map(d => `<span class="inline-block bg-red-50 text-red-600 border border-red-100 px-1.5 py-0.5 rounded text-[8px] font-bold mr-1 italic">${d}</span>`).join('')
+                    : '';
+
                 tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 align-top">
-                    <div class="text-[10px] text-red-600 uppercase font-bold mb-1">मूळ चूक:</div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[10px] text-red-600 uppercase font-bold">मूळ चूक:</span>
+                        <div class="flex flex-wrap">${doshBadges}</div>
+                    </div>
                     <div class="text-xs text-slate-600 italic mb-3 pl-3 border-l-2 border-red-100 break-all whitespace-pre-wrap leading-relaxed">"${log.wrongText}"</div>
                     
                     <div class="text-[10px] text-blue-600 uppercase font-bold mb-1">योग्य निर्णय:</div>
@@ -1335,8 +1430,20 @@
 
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 border-b border-slate-50 group";
+
+                // Find original Dosh for context
+                const decEntry = decisionLogs.find(d => d.id === log.decisionId);
+                const originalWrong = decEntry ? wrongLogs.find(w => w.id === decEntry.wrongId) : null;
+                const doshArray = originalWrong ? (Array.isArray(originalWrong.Dosh) ? originalWrong.Dosh : [originalWrong.Dosh]) : [];
+                const doshBadges = doshArray.length > 0
+                    ? doshArray.map(d => `<span class="inline-block bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded text-[8px] font-bold mr-1 italic">${d}</span>`).join('')
+                    : '';
+
                 tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 align-top">
-                    <div class="text-[10px] text-blue-600 uppercase font-bold mb-1">मूळ निर्णय:</div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[10px] text-blue-600 uppercase font-bold">मूळ निर्णय:</span>
+                        <div class="flex flex-wrap">${doshBadges}</div>
+                    </div>
                     <div class="text-xs text-slate-600 italic mb-3 pl-3 border-l-2 border-blue-100 break-all whitespace-pre-wrap leading-relaxed">"${log.decisionText}"</div>
                     
                     <div class="text-[10px] text-emerald-600 uppercase font-bold mb-1">परिणाम / बदल:</div>
@@ -1376,6 +1483,7 @@
                 const doshArray = Array.isArray(log.Dosh) ? log.Dosh : (log.Dosh ? [log.Dosh] : []);
                 setSelectedDosh(doshArray); // Use custom dropdown function
 
+                document.getElementById('wrongClassificationInput').value = log.Classification || '';
                 document.getElementById('wrongThingsInput').value = log.WrongThings;
                 document.getElementById('wrongSubmitBtn').textContent = 'चूक अपडेट करा';
                 document.getElementById('page-wrong').scrollIntoView({ behavior: 'smooth' });
@@ -1397,6 +1505,7 @@
 
                 document.getElementById('decisionInput').value = log.decision;
                 document.getElementById('decisionSubmitBtn').textContent = 'निर्णय अपडेट करा';
+                updateWrongPreview(log.wrongId);
                 document.getElementById('page-decision').scrollIntoView({ behavior: 'smooth' });
             } else if (type === 'result') {
                 const log = resultLogs.find(l => l.id === id);
@@ -1586,6 +1695,69 @@
                 setTimeout(() => clearInterval(check), 5000);
             }
         }
+
+        // --- Background Music Logic ---
+        const audio = document.getElementById('bgMusic');
+        const audioBtn = document.getElementById('audioBtn');
+        const audioLabel = document.getElementById('audioLabel');
+        const iconMuted = document.getElementById('icon-muted');
+        const iconPlaying = document.getElementById('icon-playing');
+        let isPlaying = false;
+
+        function updateAudioUI(playing) {
+            if (playing) {
+                iconMuted.classList.add('hidden');
+                iconPlaying.classList.remove('hidden');
+                audioBtn.classList.add('bg-orange-100');
+                audioLabel.classList.add('animate-pulse');
+            } else {
+                iconPlaying.classList.add('hidden');
+                iconMuted.classList.remove('hidden');
+                audioBtn.classList.remove('bg-orange-100');
+                audioLabel.classList.remove('animate-pulse');
+            }
+            isPlaying = playing;
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                updateAudioUI(false);
+            } else {
+                audio.play().then(() => {
+                    updateAudioUI(true);
+                }).catch(err => {
+                    console.log("Playback failed:", err);
+                    updateAudioUI(false);
+                });
+            }
+        }
+
+        // Attempt autoplay sequence
+        function tryAutoplay() {
+            audio.play().then(() => {
+                // Autoplay worked!
+                updateAudioUI(true);
+            }).catch(error => {
+                console.log("Autoplay prevented. Waiting for user interaction.");
+                // Autoplay blocked. Add one-time click listener to body to start it.
+                document.addEventListener('click', function unlockAudio() {
+                    audio.play().then(() => {
+                        updateAudioUI(true);
+                    }).catch(e => console.log("Still prevented: " + e));
+                    // Remove listener after first interaction
+                    document.removeEventListener('click', unlockAudio);
+                }, { once: true });
+            });
+        }
+
+        audioBtn.onclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the document unlocking listener if clicked directly
+            toggleAudio();
+        };
+
+        // Initialize
+        tryAutoplay();
     </script>
 </body>
 
