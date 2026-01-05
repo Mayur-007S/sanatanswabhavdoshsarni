@@ -54,7 +54,7 @@
                 </span>
             </div>
             <h1
-                class="absolute left-1/2 -translate-x-1/2 text-2xl font-bold text-orange-800 tracking-wide uppercase notranslate whitespace-nowrap">
+                class="absolute left-1/2 -translate-x-1/2 text-2xl font-bold text-orange-800 tracking-wide uppercase whitespace-nowrap">
                 सनातन साधना</h1>
             <button id="menuBtn" class="p-2 hover:bg-orange-200/50 rounded-full transition-colors"
                 aria-label="Open Menu">
@@ -117,6 +117,18 @@
                     </svg>
                     सर्व माहिती एक्सपोर्ट करा (Excel)
                 </button>
+                <a href="resources/dosh.pdf" target="_blank"
+                    class="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors text-slate-700 font-semibold text-sm">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    स्वभाव दोष यादी (Dosh List PDF)
+                </a>
                 <div class="mt-4 p-4 rounded-2xl bg-red-50 border border-red-100">
                     <h4 class="text-xs font-bold text-red-600 uppercase mb-2">मदत आणि अभिप्राय</h4>
                     <p class="text-xs text-slate-700 mb-3 leading-relaxed font-medium">
@@ -159,7 +171,7 @@
                 </div>
             </div>
             <div class="bg-slate-50 p-4 text-center">
-                <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest notranslate">आवृत्ती 1.8.5</p>
+                <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest">आवृत्ती 1.8.5</p>
             </div>
         </div>
     </div>
@@ -168,7 +180,7 @@
         <!-- WRONG THINGS PAGE -->
         <div id="page-wrong" class="page-content active max-w-6xl mx-auto px-4 py-8">
             <header class="mb-8">
-                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">स्वभाव दोष नोंद</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">स्वभाव दोष नोंद</h2>
                 <p class="text-slate-600 text-sm italic">"आत्मनिरीक्षण हे शुद्धतेचे पहिले पाऊल आहे."</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
@@ -214,204 +226,465 @@
                                             </div>
                                             <div class="multi-select-option" data-value="Desire (Kama)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_desire" value="काम (Desire)">
+                                                <input type="checkbox" id="dosh_desire" value="काम">
                                                 <label for="dosh_desire">काम</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Anger (Krodha)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_anger" value="क्रोध (Anger)">
+                                                <input type="checkbox" id="dosh_anger" value="क्रोध / राग">
                                                 <label for="dosh_anger">क्रोध / राग</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Greed (Lobha)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_greed" value="लोभ (Greed)">
+                                                <input type="checkbox" id="dosh_greed" value="लोभ">
                                                 <label for="dosh_greed">लोभ</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Attachment (Moha)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_attachment" value="मोह (Attachment)">
+                                                <input type="checkbox" id="dosh_attachment" value="मोह">
                                                 <label for="dosh_attachment">मोह</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Arrogance (Mada)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_arrogance"
-                                                    value="मद / ताठा (Arrogance)">
+                                                <input type="checkbox" id="dosh_arrogance" value="मद / ताठा">
                                                 <label for="dosh_arrogance">मद / ताठा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Jealousy (Matsarya)"
                                                 data-group="shadripu">
-                                                <input type="checkbox" id="dosh_jealousy"
-                                                    value="मत्सर / द्वेष (Jealousy)">
+                                                <input type="checkbox" id="dosh_jealousy" value="मत्सर / द्वेष">
                                                 <label for="dosh_jealousy">मत्सर / द्वेष</label>
                                             </div>
 
                                             <div class="multi-select-group-label">इतरांना त्रासदायक</div>
                                             <div class="multi-select-option" data-value="Short-tempered"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_shorttempered" value="Short-tempered">
+                                                <input type="checkbox" id="dosh_shorttempered" value="शीघ्रकोपीपणा">
                                                 <label for="dosh_shorttempered">शीघ्रकोपीपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Irritable"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_irritable" value="Irritable">
+                                                <input type="checkbox" id="dosh_irritable" value="चिडखोरपणा">
                                                 <label for="dosh_irritable">चिडखोरपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Quarrelsome"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_quarrelsome" value="Quarrelsome">
+                                                <input type="checkbox" id="dosh_quarrelsome" value="भांडखोरपणा">
                                                 <label for="dosh_quarrelsome">भांडखोरपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Destructive"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_destructive" value="Destructive">
+                                                <input type="checkbox" id="dosh_destructive" value="विध्वंसकवृत्ती">
                                                 <label for="dosh_destructive">विध्वंसकवृत्ती</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Looking down upon others"
                                                 data-group="affecting-others">
                                                 <input type="checkbox" id="dosh_lookingdown"
-                                                    value="Looking down upon others">
+                                                    value="दुसऱ्याला तुच्छ लेखणे">
                                                 <label for="dosh_lookingdown">दुसऱ्याला तुच्छ
                                                     लेखणे</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Pointing mistakes of others"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_pointing"
-                                                    value="Pointing mistakes of others">
+                                                <input type="checkbox" id="dosh_pointing" value="इतरांच्या चुका शोधणे">
                                                 <label for="dosh_pointing">इतरांच्या चुका
                                                     शोधणे</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Criticism"
                                                 data-group="affecting-others">
-                                                <input type="checkbox" id="dosh_criticism" value="Criticism">
+                                                <input type="checkbox" id="dosh_criticism" value="टीका करणे">
                                                 <label for="dosh_criticism">टीका करणे</label>
                                             </div>
 
                                             <div class="multi-select-group-label">स्वतःसाठी त्रासदायक</div>
                                             <div class="multi-select-option" data-value="Egoistic"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_egoistic" value="Egoistic">
+                                                <input type="checkbox" id="dosh_egoistic" value="अहंकार / गर्व">
                                                 <label for="dosh_egoistic">अहंकार / गर्व</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Emotional"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_emotional" value="Emotional">
+                                                <input type="checkbox" id="dosh_emotional" value="भावविवशता">
                                                 <label for="dosh_emotional">भावविवशता</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Fearful"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_fearful" value="Fearful">
+                                                <input type="checkbox" id="dosh_fearful" value="भीती">
                                                 <label for="dosh_fearful">भीती</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Lying / Dishonesty"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_lying" value="Lying / Dishonesty">
+                                                <input type="checkbox" id="dosh_lying"
+                                                    value="खोटे बोलणे / अप्रामाणिकपणा">
                                                 <label for="dosh_lying">खोटे बोलणे /
                                                     अप्रामाणिकपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Suspicious"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_suspicious" value="Suspicious">
+                                                <input type="checkbox" id="dosh_suspicious" value="संशयीवृत्ती">
                                                 <label for="dosh_suspicious">संशयीवृत्ती</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Ungrateful"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_ungrateful" value="Ungrateful">
+                                                <input type="checkbox" id="dosh_ungrateful" value="कृतघ्नपणा">
                                                 <label for="dosh_ungrateful">कृतघ्नपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="No repentance"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_norepentance" value="No repentance">
+                                                <input type="checkbox" id="dosh_norepentance" value="पश्चात्ताप न होणे">
                                                 <label for="dosh_norepentance">पश्चात्ताप न
                                                     होणे</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Lack of seriousness"
                                                 data-group="affecting-self">
                                                 <input type="checkbox" id="dosh_lackseriousness"
-                                                    value="Lack of seriousness">
+                                                    value="गांभीर्याचा अभाव">
                                                 <label for="dosh_lackseriousness">गांभीर्याचा
                                                     अभाव</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Lack of planning"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_lackplanning" value="Lack of planning">
+                                                <input type="checkbox" id="dosh_lackplanning" value="नियोजनाचा अभाव">
                                                 <label for="dosh_lackplanning">नियोजनाचा अभाव</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Forgetful"
                                                 data-group="affecting-self">
-                                                <input type="checkbox" id="dosh_forgetful" value="Forgetful">
+                                                <input type="checkbox" id="dosh_forgetful" value="विसरभोळेपणा">
                                                 <label for="dosh_forgetful">विसरभोळेपणा</label>
                                             </div>
 
                                             <div class="multi-select-group-label">कृती आणि वर्तन</div>
                                             <div class="multi-select-option" data-value="Laziness"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_laziness" value="Laziness">
+                                                <input type="checkbox" id="dosh_laziness" value="आळस">
                                                 <label for="dosh_laziness">आळस</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Hasty" data-group="behavioral">
-                                                <input type="checkbox" id="dosh_hasty" value="Hasty">
+                                                <input type="checkbox" id="dosh_hasty"
+                                                    value="घाईघाईने करणे / उतावळेपणा">
                                                 <label for="dosh_hasty">घाईघाईने करणे /
                                                     उतावळेपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Carelessness"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_carelessness" value="Carelessness">
+                                                <input type="checkbox" id="dosh_carelessness" value="निष्काळजीपणा">
                                                 <label for="dosh_carelessness">निष्काळजीपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Irresponsible"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_irresponsible" value="Irresponsible">
+                                                <input type="checkbox" id="dosh_irresponsible" value="बेजबाबदारपणा">
                                                 <label for="dosh_irresponsible">बेजबाबदारपणा</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Disobedience"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_disobedience" value="Disobedience">
+                                                <input type="checkbox" id="dosh_disobedience" value="अवज्ञा करणे">
                                                 <label for="dosh_disobedience">अवज्ञा करणे</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Talking unnecessarily"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_talking" value="Talking unnecessarily">
+                                                <input type="checkbox" id="dosh_talking" value="विनाकारण बोलणे">
                                                 <label for="dosh_talking">विनाकारण बोलणे</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Narrow-mindedness"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_narrowminded" value="Narrow-mindedness">
+                                                <input type="checkbox" id="dosh_narrowminded" value="संकुचितवृत्ती">
                                                 <label for="dosh_narrowminded">संकुचितवृत्ती</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Poor decision making"
                                                 data-group="behavioral">
                                                 <input type="checkbox" id="dosh_poordecision"
-                                                    value="Poor decision making">
+                                                    value="निर्णयक्षमतेचा अभाव">
                                                 <label for="dosh_poordecision">निर्णयक्षमतेचा
                                                     अभाव</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Lacking confidence"
                                                 data-group="behavioral">
                                                 <input type="checkbox" id="dosh_lackconfidence"
-                                                    value="Lacking confidence">
+                                                    value="आत्मविश्वासाचा अभाव">
                                                 <label for="dosh_lackconfidence">आत्मविश्वासाचा
                                                     अभाव</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Overspending"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_overspending" value="Overspending">
+                                                <input type="checkbox" id="dosh_overspending" value="उधळपट्टी">
                                                 <label for="dosh_overspending">उधळपट्टी</label>
                                             </div>
                                             <div class="multi-select-option" data-value="Not systematic"
                                                 data-group="behavioral">
-                                                <input type="checkbox" id="dosh_notsystematic" value="Not systematic">
+                                                <input type="checkbox" id="dosh_notsystematic" value="अव्यवस्थितपणा">
                                                 <label for="dosh_notsystematic">अव्यवस्थितपणा</label>
                                             </div>
 
+                                            <div class="multi-select-group-label">अहंचे पैलू (Aspects of Ego)</div>
+                                            <div class="multi-select-option" data-value="Speaking authoritatively"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_authoritative"
+                                                    value="अधिकारवाणीने बोलणे (Speaking authoritatively)">
+                                                <label for="ego_authoritative">अधिकारवाणीने बोलणे (Speaking
+                                                    authoritatively)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Attracting attention"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_attention"
+                                                    value="इतरांचे लक्ष वेधून घेणे (Attracting attention)">
+                                                <label for="ego_attention">इतरांचे लक्ष वेधून घेणे (Attracting
+                                                    attention)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Having expectations"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_expectations"
+                                                    value="अपेक्षा करणे (Having expectations)">
+                                                <label for="ego_expectations">अपेक्षा करणे (Having expectations)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Taking doership"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_doership"
+                                                    value="कर्तेपणा घेणे (Taking doership)">
+                                                <label for="ego_doership">कर्तेपणा घेणे (Taking doership)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Thinking one knows more"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_knowsmore"
+                                                    value="स्वतःला अधिक कळते असे वाटणे (Thinking one knows more)">
+                                                <label for="ego_knowsmore">स्वतःला अधिक कळते असे वाटणे (Thinking one
+                                                    knows more)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Admitting mistake"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_notadmitting"
+                                                    value="चूक मान्य न करणे (Not admitting mistakes)">
+                                                <label for="ego_notadmitting">चूक मान्य न करणे (Not admitting
+                                                    mistakes)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of perseverance"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_perseverance"
+                                                    value="चिकाटीचा अभाव (Lack of perseverance)">
+                                                <label for="dosh_perseverance">चिकाटीचा अभाव (Lack of
+                                                    perseverance)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Solitariness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_solitariness"
+                                                    value="एकलकोंडेपणा (Solitariness)">
+                                                <label for="dosh_solitariness">एकलकोंडेपणा (Solitariness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Prejudiced"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_prejudiced"
+                                                    value="पूर्वग्रहदूषित असणे (Being prejudiced)">
+                                                <label for="dosh_prejudiced">पूर्वग्रहदूषित असणे (Being
+                                                    prejudiced)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Unreasonableness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_unreasonable"
+                                                    value="असमंजसपणा (Unreasonableness)">
+                                                <label for="dosh_unreasonable">असमंजसपणा (Unreasonableness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of tact"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_tactless"
+                                                    value="चातुर्य नसणे (Lack of tact)">
+                                                <label for="dosh_tactless">चातुर्य नसणे (Lack of tact)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Unfaithfulness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_unfaithful"
+                                                    value="निष्ठेने न वागणे (Unfaithfulness)">
+                                                <label for="dosh_unfaithful">निष्ठेने न वागणे (Unfaithfulness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Bribery"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_bribery"
+                                                    value="लाच घेणे किंवा देणे (Bribery)">
+                                                <label for="dosh_bribery">लाच घेणे किंवा देणे (Bribery)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Showiness" data-group="ego">
+                                                <input type="checkbox" id="ego_showiness" value="दिखाऊपणा (Showiness)">
+                                                <label for="ego_showiness">दिखाऊपणा (Showiness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Insisting on one's way"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_insisting"
+                                                    value="मी म्हणतो तसेच झाले पाहिजे (Insisting on one's way)">
+                                                <label for="ego_insisting">मी म्हणतो तसेच झाले पाहिजे (Insisting on
+                                                    one's way)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Comparing" data-group="ego">
+                                                <input type="checkbox" id="ego_comparing"
+                                                    value="तुलना करणे (Comparing)">
+                                                <label for="ego_comparing">तुलना करणे (Comparing)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Seeking praise"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_praise"
+                                                    value="कौतुकाची अपेक्षा करणे (Expecting praise)">
+                                                <label for="ego_praise">कौतुकाची अपेक्षा करणे (Expecting praise)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Self-willed behavior"
+                                                data-group="ego">
+                                                <input type="checkbox" id="ego_selfwilled"
+                                                    value="मनाप्रमाणे वागणे (Self-willed behavior)">
+                                                <label for="ego_selfwilled">मनाप्रमाणे वागणे (Self-willed
+                                                    behavior)</label>
+                                            </div>
+
+                                            <div class="multi-select-group-label">इतर स्वभावदोष (More Defects)</div>
+                                            <div class="multi-select-option" data-value="Worrying"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_worrying" value="काळजी करणे (Worrying)">
+                                                <label for="dosh_worrying">काळजी करणे (Worrying)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Anxiety"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_anxiety" value="चिंतातुरता (Anxiety)">
+                                                <label for="dosh_anxiety">चिंतातुरता (Anxiety)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Rudeness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_rudeness" value="उध्दटपणा (Rudeness)">
+                                                <label for="dosh_rudeness">उध्दटपणा (Rudeness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of tolerance"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_tolerance"
+                                                    value="सहनशीलता नसणे (Lack of tolerance)">
+                                                <label for="dosh_tolerance">सहनशीलता नसणे (Lack of tolerance)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Stubbornness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_stubborn"
+                                                    value="हट्टीपणा (Stubbornness)">
+                                                <label for="dosh_stubborn">हट्टीपणा (Stubbornness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Selfishness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_selfish"
+                                                    value="स्वार्थीपणा (Selfishness)">
+                                                <label for="dosh_selfish">स्वार्थीपणा (Selfishness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Negative thinking"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_negative"
+                                                    value="नकारात्मक विचार (Negative thinking)">
+                                                <label for="dosh_negative">नकारात्मक विचार (Negative thinking)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Dominating"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_dominating"
+                                                    value="वर्चस्व गाजवणे (Dominating)">
+                                                <label for="dosh_dominating">वर्चस्व गाजवणे (Dominating)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of concentration"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_concentration"
+                                                    value="एकाग्रता नसणे (Lack of concentration)">
+                                                <label for="dosh_concentration">एकाग्रता नसणे (Lack of
+                                                    concentration)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Moodiness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_moodiness" value="लहरीपणा (Moodiness)">
+                                                <label for="dosh_moodiness">लहरीपणा (Moodiness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Discouraging others"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_discouraging"
+                                                    value="दुसऱ्यांना निरुत्साही करणे (Discouraging others)">
+                                                <label for="dosh_discouraging">दुसऱ्यांना निरुत्साही करणे (Discouraging
+                                                    others)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Inferiority complex"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_inferiority"
+                                                    value="न्युनगंड असणे (Inferiority complex)">
+                                                <label for="dosh_inferiority">न्युनगंड असणे (Inferiority
+                                                    complex)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Lack of empathy"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_empathy"
+                                                    value="सहानुभूति न वाटणे (Lack of empathy)">
+                                                <label for="dosh_empathy">सहानुभूति न वाटणे (Lack of empathy)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Punctuality"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_punctuality"
+                                                    value="वक्तशीरपणाचा अभाव (Lack of punctuality)">
+                                                <label for="dosh_punctuality">वक्तशीरपणाचा अभाव (Lack of
+                                                    punctuality)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Vengefulness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_vengeful"
+                                                    value="सूडबुद्धी असणे (Vengefulness)">
+                                                <label for="dosh_vengeful">सूडबुद्धी असणे (Vengefulness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Unethical"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_unethical"
+                                                    value="नीतीने न वागणे (Unethical behavior)">
+                                                <label for="dosh_unethical">नीतीने न वागणे (Unethical behavior)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Miserliness"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_miser" value="कंजूषपणा (Miserliness)">
+                                                <label for="dosh_miser">कंजूषपणा (Miserliness)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Partiality"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_partiality"
+                                                    value="पक्षपातीपणा (Partiality)">
+                                                <label for="dosh_partiality">पक्षपातीपणा (Partiality)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Over-ambitious"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_ambitious"
+                                                    value="अतिमहत्वाकांक्षी असणे (Over-ambitious)">
+                                                <label for="dosh_ambitious">अतिमहत्वाकांक्षी असणे
+                                                    (Over-ambitious)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Daydreaming"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_daydream"
+                                                    value="मनोराज्यात रमणे (Daydreaming)">
+                                                <label for="dosh_daydream">मनोराज्यात रमणे (Daydreaming)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Seeking attention"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_attention_seeking"
+                                                    value="दुसऱ्यांनी लक्ष द्यावे असे वाटणे (Seeking attention)">
+                                                <label for="dosh_attention_seeking">दुसऱ्यांनी लक्ष द्यावे असे वाटणे
+                                                    (Seeking attention)</label>
+                                            </div>
+                                            <div class="multi-select-option" data-value="Pessimistic"
+                                                data-group="other-list">
+                                                <input type="checkbox" id="dosh_pessimistic"
+                                                    value="निराशावादी वृत्ती (Pessimistic attitude)">
+                                                <label for="dosh_pessimistic">निराशावादी वृत्ती (Pessimistic
+                                                    attitude)</label>
+                                            </div>
+
                                             <div class="multi-select-option" data-value="Others" data-group="other">
-                                                <input type="checkbox" id="dosh_others" value="इतर (Others)">
+                                                <input type="checkbox" id="dosh_others" value="इतर">
                                                 <label for="dosh_others">इतर</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-[10px] text-slate-500 mt-1.5 italic">💡 उघडण्यासाठी क्लिक करा आणि दोष
-                                    निवडा</p>
+                                <div class="flex justify-between items-center mt-1.5">
+                                    <p class="text-[10px] text-slate-500 italic">💡 उघडण्यासाठी क्लिक करा आणि दोष निवडा
+                                    </p>
+                                    <a href="resources/dosh.pdf" target="_blank"
+                                        class="text-[10px] text-blue-600 font-bold hover:underline flex items-center gap-1">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2.5">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                        </svg>
+                                        दोष यादी (Dosh List)
+                                    </a>
+                                </div>
                             </div>
                             <div>
                                 <label for="wrongClassificationInput"
@@ -452,10 +725,12 @@
                                 </svg>
                             </div>
                         </div>
+                        <div id="wrongPaginationTop"></div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left">
+                            <table class="w-full text-left table-fixed">
                                 <tbody id="wrongTableBody" class="divide-y divide-slate-50"></tbody>
                             </table>
+                            <div id="wrongPagination"></div>
                             <div id="wrongEmpty" class="hidden p-20 text-center text-slate-600 italic">अद्याप काहीही
                                 नोंद नाही.
                             </div>
@@ -464,11 +739,12 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- DECISION PAGE -->
         <div id="page-decision" class="page-content max-w-6xl mx-auto px-4 py-8">
             <header class="mb-8">
-                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">योग्य निर्णय</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">योग्य निर्णय</h2>
                 <p class="text-slate-600 text-sm">जाणीवपूर्वक चुका सुधारणे</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
@@ -483,9 +759,10 @@
                                     class="block text-xs font-bold text-slate-600 uppercase mb-1.5">चूक निवडा</label>
                                 <div class="custom-select-container relative">
                                     <div id="wrongThingTrigger"
-                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex justify-between items-center cursor-pointer min-h-[46px]">
-                                        <span class="text-slate-500">-- मागील नोंदीमधून निवडा --</span>
-                                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex justify-between items-center gap-3 cursor-pointer min-h-[46px]">
+                                        <span class="text-slate-500 whitespace-normal break-all flex-1">-- मागील
+                                            नोंदीमधून निवडा --</span>
+                                        <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M19 9l-7 7-7-7"></path>
@@ -534,10 +811,12 @@
                                 </svg>
                             </div>
                         </div>
+                        <div id="decisionPaginationTop"></div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left">
+                            <table class="w-full text-left table-fixed">
                                 <tbody id="decisionTableBody" class="divide-y divide-slate-50"></tbody>
                             </table>
+                            <div id="decisionPagination"></div>
                             <div id="decisionEmpty" class="hidden p-20 text-center text-slate-600 italic">अद्याप कोणताही
                                 निर्णय नोंदवला नाही.</div>
                         </div>
@@ -545,11 +824,12 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <!-- RESULTS PAGE -->
         <div id="page-results" class="page-content max-w-6xl mx-auto px-4 py-8">
             <header class="mb-8">
-                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 notranslate">परिणाम आणि बदल</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">परिणाम आणि बदल</h2>
                 <p class="text-slate-600 text-sm">कृतीनंतर झालेले अंतर्गत बदल अनुभवणे</p>
             </header>
             <div class="grid lg:grid-cols-12 gap-8">
@@ -563,10 +843,30 @@
                                 <label for="decisionSelector"
                                     class="block text-xs font-bold text-slate-600 uppercase mb-1.5">घेतलेला निर्णय
                                     निवडा</label>
-                                <select id="decisionSelector" required
-                                    class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
-                                    <option value="">-- निर्णयांमधून निवडा --</option>
-                                </select>
+                                <div class="custom-select-container relative">
+                                    <div id="decisionTrigger"
+                                        class="w-full rounded-xl border-slate-200 bg-slate-50 p-3 border font-medium text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none flex justify-between items-center gap-3 cursor-pointer min-h-[46px]">
+                                        <span class="text-slate-500 whitespace-normal break-all flex-1">--
+                                            निर्णयांमधून निवडा --</span>
+                                        <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                    <input type="hidden" id="decisionSelector" required>
+
+                                    <div id="decisionDropdown"
+                                        class="hidden absolute z-20 w-full mt-1 bg-white border border-slate-100 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+                                        <div class="p-2 sticky top-0 bg-white border-b border-slate-50">
+                                            <input type="text" id="decisionSearch" placeholder="निर्णय शोधा..."
+                                                class="w-full p-2 text-xs bg-slate-50 rounded-lg border-none outline-none focus:ring-1 focus:ring-emerald-500">
+                                        </div>
+                                        <div id="decisionOptions" class="py-1">
+                                            <!-- Options populated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div>
                                 <label for="resultInput"
@@ -596,16 +896,19 @@
                                 </svg>
                             </div>
                         </div>
+                        <div id="resultPaginationTop"></div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left">
+                            <table class="w-full text-left table-fixed">
                                 <tbody id="resultsTableBody" class="divide-y divide-slate-50"></tbody>
                             </table>
+                            <div id="resultPagination"></div>
                             <div id="resultsEmpty" class="hidden p-20 text-center text-slate-600 italic">अद्याप परिणाम
                                 नोंदवले नाहीत.</div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
 
@@ -635,6 +938,24 @@
         let wrongLogs = JSON.parse(localStorage.getItem(STORAGE_WRONG)) || [];
         let decisionLogs = JSON.parse(localStorage.getItem(STORAGE_DECISION)) || [];
         let resultLogs = JSON.parse(localStorage.getItem(STORAGE_RESULT)) || [];
+
+        let currentPageWrong = 1;
+        let currentPageDecision = 1;
+        let currentPageResult = 1;
+        let itemsPerPage = 5;
+
+        // --- Helper: Check if date is within last X days ---
+        function isRecent(dateStr) {
+            if (!dateStr) return false;
+            const logDate = new Date(dateStr);
+            const today = new Date();
+            // Reset times for accurate day comparison
+            today.setHours(0, 0, 0, 0);
+            logDate.setHours(0, 0, 0, 0);
+            const diffTime = today - logDate;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays <= 3;
+        }
 
         // --- Read More / Truncate Logic ---
         function getExpandableText(text, uidPrefix, limit = 100) {
@@ -842,6 +1163,7 @@
             }
 
             localStorage.setItem(STORAGE_WRONG, JSON.stringify(wrongLogs));
+            if (!editId) currentPageWrong = 1;
             renderWrong();
             wrongForm.reset();
             clearDoshSelection(); // Clear custom dropdown
@@ -852,11 +1174,142 @@
         };
 
         // Initialize Search Listeners
-        document.getElementById('searchWrongLogs').addEventListener('input', () => renderWrong());
-        document.getElementById('searchDecisionLogs').addEventListener('input', () => renderDecisions());
-        document.getElementById('searchResultLogs').addEventListener('input', () => renderResults());
+        document.getElementById('searchWrongLogs').addEventListener('input', () => {
+            currentPageWrong = 1;
+            renderWrong();
+        });
+        document.getElementById('searchDecisionLogs').addEventListener('input', () => {
+            currentPageDecision = 1;
+            renderDecisions();
+        });
+        document.getElementById('searchResultLogs').addEventListener('input', () => {
+            currentPageResult = 1;
+            renderResults();
+        });
 
-        function renderWrong(showAll = false) {
+        function renderPagination(totalItems, currentPage, containerId, onPageChange) {
+            const containers = Array.isArray(containerId) ? containerId : [containerId];
+
+            containers.forEach(cid => {
+                const container = document.getElementById(cid);
+                if (!container) return;
+                container.innerHTML = '';
+
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (totalPages <= 1 && itemsPerPage !== 999999) {
+                    if (totalItems > 10) {
+                        // Still show if we have many items but "All" is selected, to allow switching back
+                    } else {
+                        return;
+                    }
+                }
+
+                const nav = document.createElement('div');
+                nav.className = 'pagination-container';
+
+                // Left side: Info + Items Per Page
+                const leftPart = document.createElement('div');
+                leftPart.className = 'flex flex-col gap-1';
+
+                const start = totalItems === 0 ? 0 : ((currentPage - 1) * itemsPerPage) + 1;
+                const end = Math.min(currentPage * itemsPerPage, totalItems);
+
+                const info = document.createElement('div');
+                info.className = 'pagination-info';
+                info.textContent = `${totalItems} पैकी ${start}-${end} नोंदी`;
+                leftPart.appendChild(info);
+
+                // Items per page selector (Only for bottom container or if requested)
+                if (cid.toLowerCase().indexOf('top') === -1) {
+                    const ippWrapper = document.createElement('div');
+                    ippWrapper.className = 'items-per-page-wrapper';
+                    ippWrapper.innerHTML = `
+                        <span>दाखवा:</span>
+                        <select onchange="updateItemsPerPage(this.value)">
+                            <option value="10" ${itemsPerPage === 10 ? 'selected' : ''}>10</option>
+                            <option value="20" ${itemsPerPage === 20 ? 'selected' : ''}>20</option>
+                            <option value="50" ${itemsPerPage === 50 ? 'selected' : ''}>50</option>
+                            <option value="999999" ${itemsPerPage === 999999 ? 'selected' : ''}>सर्व</option>
+                        </select>
+                    `;
+                    leftPart.appendChild(ippWrapper);
+                }
+
+                nav.appendChild(leftPart);
+
+                // Right side: Controls
+                const controlsWrapper = document.createElement('div');
+                controlsWrapper.className = 'pagination-controls-wrapper';
+
+                const controls = document.createElement('div');
+                controls.className = 'pagination-controls';
+
+                // First Button
+                const firstBtn = document.createElement('button');
+                firstBtn.className = 'pagination-btn';
+                firstBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>';
+                firstBtn.disabled = currentPage === 1;
+                firstBtn.onclick = (e) => { e.preventDefault(); onPageChange(1); };
+                controls.appendChild(firstBtn);
+
+                // Prev Button
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'pagination-btn';
+                prevBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = (e) => { e.preventDefault(); onPageChange(currentPage - 1); };
+                controls.appendChild(prevBtn);
+
+                // Page numbers
+                const maxPagesToShow = 5;
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+                if (endPage - startPage < maxPagesToShow - 1) {
+                    startPage = Math.max(1, endPage - maxPagesToShow + 1);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.textContent = i;
+                    btn.onclick = (e) => { e.preventDefault(); onPageChange(i); };
+                    controls.appendChild(btn);
+                }
+
+                // Next Button
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'pagination-btn';
+                nextBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+                nextBtn.onclick = (e) => { e.preventDefault(); onPageChange(currentPage + 1); };
+                controls.appendChild(nextBtn);
+
+                // Last Button
+                const lastBtn = document.createElement('button');
+                lastBtn.className = 'pagination-btn';
+                lastBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>';
+                lastBtn.disabled = currentPage === totalPages || totalPages === 0;
+                lastBtn.onclick = (e) => { e.preventDefault(); onPageChange(totalPages); };
+                controls.appendChild(lastBtn);
+
+                controlsWrapper.appendChild(controls);
+                nav.appendChild(controlsWrapper);
+                container.appendChild(nav);
+            });
+        }
+
+        window.updateItemsPerPage = (val) => {
+            itemsPerPage = parseInt(val);
+            currentPageWrong = 1;
+            currentPageDecision = 1;
+            currentPageResult = 1;
+            renderWrong();
+            renderDecisions();
+            renderResults();
+        };
+
+        function renderWrong() {
             const container = document.getElementById('wrongTableBody');
             const empty = document.getElementById('wrongEmpty');
             const searchTerm = document.getElementById('searchWrongLogs').value.toLowerCase();
@@ -865,7 +1318,6 @@
 
             // Filter
             const filteredLogs = wrongLogs.filter(log => {
-                if (!searchTerm) return true;
                 if (!searchTerm) return true;
                 const doshStr = Array.isArray(log.Dosh) ? log.Dosh.join(' ') : (log.Dosh || '');
                 return log.WrongThings.toLowerCase().includes(searchTerm) ||
@@ -884,11 +1336,19 @@
             if (filteredLogs.length === 0) {
                 empty.classList.remove('hidden');
                 empty.textContent = searchTerm ? 'कोणतीही नोंद सापडली नाही.' : 'अद्याप काहीही नोंद नाही.';
+                document.getElementById('wrongPagination').innerHTML = '';
                 return;
             }
 
             empty.classList.add('hidden');
-            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+
+            // Pagination logic
+            const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+            if (currentPageWrong > totalPages && totalPages > 0) currentPageWrong = totalPages;
+
+            const startIndex = (currentPageWrong - 1) * itemsPerPage;
+            const displayLogs = filteredLogs.slice(startIndex, startIndex + itemsPerPage);
+
             const fragment = document.createDocumentFragment();
 
             let lastDate = null;
@@ -932,14 +1392,16 @@
                 fragment.appendChild(tr);
             });
 
-            if (!showAll && wrongLogs.length > 50) {
-                const moreTr = document.createElement('tr');
-                moreTr.innerHTML = `<td colspan="3" class="px-6 py-4 text-center">
-                    <button onclick="renderWrong(true)" class="text-blue-600 text-sm font-bold hover:underline">आणखी ${wrongLogs.length - 50} नोंदी दाखवा...</button>
-                </td>`;
-                fragment.appendChild(moreTr);
-            }
             container.appendChild(fragment);
+
+            // Render Pagination (Top & Bottom)
+            const paginationContainers = ['wrongPaginationTop', 'wrongPagination'];
+            renderPagination(filteredLogs.length, currentPageWrong, paginationContainers, (newPage) => {
+                currentPageWrong = newPage;
+                renderWrong();
+                // Scroll to top of table
+                container.closest('.bg-white').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         }
 
         // --- Decision Logic ---
@@ -952,14 +1414,21 @@
 
         wtTrigger.onclick = (e) => {
             e.stopPropagation();
-            populateWrongSelector(); // Ensure up to date
             wtDropdown.classList.toggle('hidden');
             if (!wtDropdown.classList.contains('hidden')) {
                 wtSearch.value = '';
                 wtSearch.focus();
-                // Reset search visibility
-                const options = document.getElementById('wrongThingOptions').children;
-                Array.from(options).forEach(opt => opt.classList.remove('hidden'));
+
+                const container = document.getElementById('wrongThingOptions');
+                const showAll = container.dataset.showAll === 'true';
+                const options = container.children;
+
+                Array.from(options).forEach(opt => {
+                    if (opt.dataset.type === 'header' || opt.classList.contains('load-more-btn')) return;
+                    if (showAll || opt.dataset.recent === 'true') opt.classList.remove('hidden');
+                    else opt.classList.add('hidden');
+                });
+                updateDropdownHeaders('wrongThingOptions', '');
             }
         };
 
@@ -968,16 +1437,110 @@
             if (!wtTrigger.contains(e.target) && !wtDropdown.contains(e.target)) {
                 wtDropdown.classList.add('hidden');
             }
+            const dtTrigger = document.getElementById('decisionTrigger');
+            const dtDropdown = document.getElementById('decisionDropdown');
+            if (dtTrigger && dtDropdown && !dtTrigger.contains(e.target) && !dtDropdown.contains(e.target)) {
+                dtDropdown.classList.add('hidden');
+            }
         });
+
+        // Custom Decision Dropdown Logic
+        const dtTrigger = document.getElementById('decisionTrigger');
+        const dtDropdown = document.getElementById('decisionDropdown');
+        const dtInput = document.getElementById('decisionSelector');
+        const dtSearch = document.getElementById('decisionSearch');
+
+        if (dtTrigger) {
+            dtTrigger.onclick = (e) => {
+                e.stopPropagation();
+                dtDropdown.classList.toggle('hidden');
+                if (!dtDropdown.classList.contains('hidden')) {
+                    dtSearch.value = '';
+                    dtSearch.focus();
+
+                    const container = document.getElementById('decisionOptions');
+                    const showAll = container.dataset.showAll === 'true';
+                    const options = container.children;
+
+                    Array.from(options).forEach(opt => {
+                        if (opt.dataset.type === 'header' || opt.classList.contains('load-more-btn')) return;
+                        if (showAll || opt.dataset.recent === 'true') opt.classList.remove('hidden');
+                        else opt.classList.add('hidden');
+                    });
+                    updateDropdownHeaders('decisionOptions', '');
+                }
+            };
+        }
+
+        function updateDropdownHeaders(containerId, term) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const children = Array.from(container.children);
+            const showAll = container.dataset.showAll === 'true';
+            let currentHeader = null;
+            let hasVisibleChild = false;
+
+            children.forEach(el => {
+                if (el.dataset.type === 'header') {
+                    if (currentHeader) {
+                        currentHeader.classList.toggle('hidden', !hasVisibleChild);
+                    }
+                    currentHeader = el;
+                    hasVisibleChild = false;
+                } else if (!el.classList.contains('hidden') && !el.classList.contains('load-more-btn')) {
+                    hasVisibleChild = true;
+                }
+            });
+            if (currentHeader) {
+                currentHeader.classList.toggle('hidden', !hasVisibleChild);
+            }
+            // Ensure load more button is always visible if it exists and we haven't clicked show all
+            const loadMore = container.querySelector('.load-more-btn');
+            if (loadMore) {
+                loadMore.classList.toggle('hidden', showAll || (term !== ''));
+            }
+        }
+
+        if (dtSearch) {
+            dtSearch.oninput = (e) => {
+                const term = e.target.value.toLowerCase();
+                const container = document.getElementById('decisionOptions');
+                const showAll = container.dataset.showAll === 'true';
+                const options = container.children;
+
+                Array.from(options).forEach(opt => {
+                    if (opt.dataset.type === 'header' || opt.classList.contains('load-more-btn')) return;
+                    const text = opt.textContent.toLowerCase();
+                    if (term) {
+                        if (text.includes(term)) opt.classList.remove('hidden');
+                        else opt.classList.add('hidden');
+                    } else {
+                        if (showAll || opt.dataset.recent === 'true') opt.classList.remove('hidden');
+                        else opt.classList.add('hidden');
+                    }
+                });
+                updateDropdownHeaders('decisionOptions', term);
+            };
+        }
 
         wtSearch.oninput = (e) => {
             const term = e.target.value.toLowerCase();
-            const options = document.getElementById('wrongThingOptions').children;
+            const container = document.getElementById('wrongThingOptions');
+            const showAll = container.dataset.showAll === 'true';
+            const options = container.children;
+
             Array.from(options).forEach(opt => {
+                if (opt.dataset.type === 'header' || opt.classList.contains('load-more-btn')) return;
                 const text = opt.textContent.toLowerCase();
-                if (text.includes(term)) opt.classList.remove('hidden');
-                else opt.classList.add('hidden');
+                if (term) {
+                    if (text.includes(term)) opt.classList.remove('hidden');
+                    else opt.classList.add('hidden');
+                } else {
+                    if (showAll || opt.dataset.recent === 'true') opt.classList.remove('hidden');
+                    else opt.classList.add('hidden');
+                }
             });
+            updateDropdownHeaders('wrongThingOptions', term);
         };
 
         function populateWrongSelector() {
@@ -989,14 +1552,45 @@
                 return;
             }
 
-            wrongLogs.forEach(log => {
+            // Sort by date/time newest first
+            const sortedLogs = [...wrongLogs].sort((a, b) => {
+                const valA = a.Date + (a.Time || '00:00');
+                const valB = b.Date + (b.Time || '00:00');
+                return valB.localeCompare(valA);
+            });
+
+            let lastDate = null;
+            let visibleCount = 0;
+            const maxInitialEntries = 15; // Show first 15 by default
+            const showAll = container.dataset.showAll === 'true';
+
+            sortedLogs.forEach((log, index) => {
+                const recent = isRecent(log.Date);
+                const isOverLimit = !showAll && index >= maxInitialEntries;
+
+                if (log.Date !== lastDate) {
+                    const header = document.createElement('div');
+                    header.className = 'multi-select-group-label px-3 py-1.5 bg-slate-50 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 border-b border-slate-100 z-10';
+                    header.textContent = log.Date;
+                    header.dataset.type = 'header';
+                    header.dataset.recent = recent;
+
+                    if (isOverLimit) header.classList.add('hidden');
+                    container.appendChild(header);
+                    lastDate = log.Date;
+                }
+
                 const div = document.createElement('div');
-                div.className = 'px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 whitespace-normal';
-                div.innerHTML = `<span class="font-bold text-xs text-slate-500 block mb-1">[${log.Date}]</span> ${log.WrongThings}`;
+                div.dataset.recent = recent;
+                div.className = 'px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 whitespace-normal break-all';
+
+                if (isOverLimit) div.classList.add('hidden');
+
+                div.innerHTML = `<span class="hidden">[${log.Date}]</span> ${log.WrongThings}`;
                 div.onclick = () => {
                     wtInput.value = log.id;
                     const span = wtTrigger.querySelector('span');
-                    span.textContent = `[${log.Date}] ${log.WrongThings.substring(0, 50)}${log.WrongThings.length > 50 ? '...' : ''}`;
+                    span.textContent = `[${log.Date}] ${log.WrongThings}`;
                     span.classList.remove('text-slate-500');
                     span.classList.add('text-slate-800');
                     wtDropdown.classList.add('hidden');
@@ -1004,6 +1598,22 @@
                 };
                 container.appendChild(div);
             });
+
+            // Add "Show All" button if there are more entries
+            if (!showAll && sortedLogs.length > maxInitialEntries) {
+                const loadMore = document.createElement('div');
+                loadMore.className = 'load-more-btn';
+                loadMore.innerHTML = `<span>सर्व इतिहास पहा (${sortedLogs.length} नोंदी)</span>`;
+                loadMore.onclick = (e) => {
+                    e.stopPropagation();
+                    container.dataset.showAll = 'true';
+                    populateWrongSelector();
+                    // Keep dropdown open
+                    wtDropdown.classList.remove('hidden');
+                    wtSearch.focus();
+                };
+                container.appendChild(loadMore);
+            }
         }
 
         decisionForm.onsubmit = (e) => {
@@ -1031,6 +1641,7 @@
             }
 
             localStorage.setItem(STORAGE_DECISION, JSON.stringify(decisionLogs));
+            if (!editId) currentPageDecision = 1;
             renderDecisions();
             decisionForm.reset();
             updateWrongPreview(null);
@@ -1070,7 +1681,7 @@
             preview.classList.remove('hidden');
         }
 
-        function renderDecisions(showAll = false) {
+        function renderDecisions() {
             const container = document.getElementById('decisionTableBody');
             const empty = document.getElementById('decisionEmpty');
             const searchTerm = document.getElementById('searchDecisionLogs').value.toLowerCase();
@@ -1090,11 +1701,19 @@
             if (filteredLogs.length === 0) {
                 empty.classList.remove('hidden');
                 empty.textContent = searchTerm ? 'कोणताही निर्णय सापडला नाही.' : 'अद्याप कोणताही निर्णय नोंदवला नाही.';
+                document.getElementById('decisionPagination').innerHTML = '';
                 return;
             }
 
             empty.classList.add('hidden');
-            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+
+            // Pagination logic
+            const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+            if (currentPageDecision > totalPages && totalPages > 0) currentPageDecision = totalPages;
+
+            const startIndex = (currentPageDecision - 1) * itemsPerPage;
+            const displayLogs = filteredLogs.slice(startIndex, startIndex + itemsPerPage);
+
             const fragment = document.createDocumentFragment();
 
             let lastDate = null;
@@ -1138,29 +1757,83 @@
                 fragment.appendChild(tr);
             });
 
-            if (!showAll && decisionLogs.length > 50) {
-                const moreTr = document.createElement('tr');
-                moreTr.innerHTML = `<td colspan="2" class="px-6 py-4 text-center">
-                    <button onclick="renderDecisions(true)" class="text-blue-600 text-sm font-bold hover:underline">सर्व निर्णय दाखवा...</button>
-                </td>`;
-                fragment.appendChild(moreTr);
-            }
             container.appendChild(fragment);
+
+            // Render Pagination (Top & Bottom)
+            const paginationContainers = ['decisionPaginationTop', 'decisionPagination'];
+            renderPagination(filteredLogs.length, currentPageDecision, paginationContainers, (newPage) => {
+                currentPageDecision = newPage;
+                renderDecisions();
+                container.closest('.bg-white').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         }
 
         // --- Results Logic ---
         const resultForm = document.getElementById('resultForm');
         function populateDecisionSelector() {
-            const sel = document.getElementById('decisionSelector');
-            const val = sel.value;
-            sel.innerHTML = '<option value="">-- निर्णयांमधून निवडा --</option>';
-            decisionLogs.forEach(log => {
-                const opt = document.createElement('option');
-                opt.value = log.id;
-                opt.textContent = log.decision;
-                sel.appendChild(opt);
+            const container = document.getElementById('decisionOptions');
+            const dtTrigger = document.getElementById('decisionTrigger');
+            const dtInput = document.getElementById('decisionSelector');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (decisionLogs.length === 0) {
+                container.innerHTML = '<div class="p-3 text-xs text-slate-600 italic">अजून कोणताही निर्णय नोंदवला नाही.</div>';
+                return;
+            }
+
+            // Sort by date newest first
+            const sortedLogs = [...decisionLogs].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+            let lastDate = null;
+            const maxInitialEntries = 15;
+            const showAll = container.dataset.showAll === 'true';
+
+            sortedLogs.forEach((log, index) => {
+                const recent = isRecent(log.date);
+                const isOverLimit = !showAll && index >= maxInitialEntries;
+
+                if (log.date !== lastDate) {
+                    const header = document.createElement('div');
+                    header.className = 'multi-select-group-label px-3 py-1.5 bg-slate-50 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 border-b border-slate-100 z-10';
+                    header.textContent = log.date;
+                    header.dataset.type = 'header';
+                    header.dataset.recent = recent;
+                    if (isOverLimit) header.classList.add('hidden');
+                    container.appendChild(header);
+                    lastDate = log.date;
+                }
+                const div = document.createElement('div');
+                div.dataset.recent = recent;
+                div.className = 'px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 whitespace-normal break-all';
+                if (isOverLimit) div.classList.add('hidden');
+                div.innerHTML = `<span class="hidden">[${log.date}]</span> ${log.decision}`;
+                div.onclick = () => {
+                    dtInput.value = log.id;
+                    const span = dtTrigger.querySelector('span');
+                    span.textContent = `[${log.date}] ${log.decision}`;
+                    span.classList.remove('text-slate-500');
+                    span.classList.add('text-slate-800');
+                    document.getElementById('decisionDropdown').classList.add('hidden');
+                };
+                container.appendChild(div);
             });
-            sel.value = val;
+
+            if (!showAll && sortedLogs.length > maxInitialEntries) {
+                const loadMore = document.createElement('div');
+                loadMore.className = 'load-more-btn';
+                loadMore.innerHTML = `<span>सर्व निर्णय इतिहास पहा (${sortedLogs.length} नोंदी)</span>`;
+                loadMore.onclick = (e) => {
+                    e.stopPropagation();
+                    container.dataset.showAll = 'true';
+                    populateDecisionSelector();
+                    const dropdown = document.getElementById('decisionDropdown');
+                    if (dropdown) dropdown.classList.remove('hidden');
+                    const search = document.getElementById('decisionSearch');
+                    if (search) search.focus();
+                };
+                container.appendChild(loadMore);
+            }
         }
 
         resultForm.onsubmit = (e) => {
@@ -1188,11 +1861,20 @@
             }
 
             localStorage.setItem(STORAGE_RESULT, JSON.stringify(resultLogs));
+            if (!editId) currentPageResult = 1;
             renderResults();
             resultForm.reset();
+            const dtTrigger = document.getElementById('decisionTrigger');
+            if (dtTrigger) {
+                const span = dtTrigger.querySelector('span');
+                span.textContent = '-- निर्णयांमधून निवडा --';
+                span.classList.add('text-slate-500');
+                span.classList.remove('text-slate-800');
+            }
+            document.getElementById('decisionSelector').value = '';
         };
 
-        function renderResults(showAll = false) {
+        function renderResults() {
             const container = document.getElementById('resultsTableBody');
             const empty = document.getElementById('resultsEmpty');
             const searchTerm = document.getElementById('searchResultLogs').value.toLowerCase();
@@ -1212,11 +1894,19 @@
             if (filteredLogs.length === 0) {
                 empty.classList.remove('hidden');
                 empty.textContent = searchTerm ? 'कोणतेही परिणाम सापडले नाहीत.' : 'अद्याप परिणाम नोंदवले नाहीत.';
+                document.getElementById('resultPagination').innerHTML = '';
                 return;
             }
 
             empty.classList.add('hidden');
-            const displayLogs = showAll ? filteredLogs : filteredLogs.slice(0, 50);
+
+            // Pagination logic
+            const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+            if (currentPageResult > totalPages && totalPages > 0) currentPageResult = totalPages;
+
+            const startIndex = (currentPageResult - 1) * itemsPerPage;
+            const displayLogs = filteredLogs.slice(startIndex, startIndex + itemsPerPage);
+
             const fragment = document.createDocumentFragment();
 
             let lastDate = null;
@@ -1261,14 +1951,15 @@
                 fragment.appendChild(tr);
             });
 
-            if (!showAll && resultLogs.length > 50) {
-                const moreTr = document.createElement('tr');
-                moreTr.innerHTML = `<td colspan="2" class="px-6 py-4 text-center">
-                    <button onclick="renderResults(true)" class="text-blue-600 text-sm font-bold hover:underline">सर्व परिणाम दाखवा...</button>
-                </td>`;
-                fragment.appendChild(moreTr);
-            }
             container.appendChild(fragment);
+
+            // Render Pagination (Top & Bottom)
+            const paginationContainers = ['resultPaginationTop', 'resultPagination'];
+            renderPagination(filteredLogs.length, currentPageResult, paginationContainers, (newPage) => {
+                currentPageResult = newPage;
+                renderResults();
+                container.closest('.bg-white').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         }
 
         // --- General ---
@@ -1316,6 +2007,16 @@
                 document.getElementById('decisionSelector').value = log.decisionId;
                 document.getElementById('resultInput').value = log.result;
                 document.getElementById('resultSubmitBtn').textContent = 'परिणाम अपडेट करा';
+
+                // Update decision selector trigger
+                const decisionEntry = decisionLogs.find(d => d.id === log.decisionId);
+                if (decisionEntry) {
+                    const span = document.getElementById('decisionTrigger').querySelector('span');
+                    span.textContent = `[${decisionEntry.date}] ${decisionEntry.decision.substring(0, 50)}...`;
+                    span.classList.remove('text-slate-500');
+                    span.classList.add('text-slate-800');
+                }
+
                 document.getElementById('page-results').scrollIntoView({ behavior: 'smooth' });
             }
         };

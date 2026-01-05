@@ -116,7 +116,7 @@ body {
     border-radius: 12px;
     margin-top: 4px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    z-index: 50;
+    z-index: 30;
     max-height: 320px;
     display: none;
     flex-direction: column;
@@ -199,8 +199,165 @@ body {
         padding-bottom: 80px;
     }
 
-    /* Move toast up slightly on mobile so it clears the banner */
     #toast {
         bottom: 70px !important;
     }
+}
+
+
+/* Premium Pagination Styles */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+}
+
+.pagination-controls-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.items-per-page-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.items-per-page-wrapper select {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    font-size: 0.75rem;
+    outline: none;
+    cursor: pointer;
+    background: white;
+}
+
+.pagination-info {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.pagination-btn {
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4rem;
+    border-radius: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #475569;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    border-color: #cbd5e1;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+
+.pagination-btn.active {
+    background-color: #0f172a;
+    border-color: #0f172a;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+}
+
+.load-more-btn {
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    background-color: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.load-more-btn:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.dropdown-pagination {
+    background-color: #f8fafc;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Fix for mobile */
+@media (max-width: 640px) {
+    .pagination-container {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .pagination-controls-wrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Prevent horizontal overflow of long strings */
+.break-all {
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+}
+
+.whitespace-normal {
+    white-space: normal !important;
+}
+
+/* Ensure table-fixed class works as expected */
+.table-fixed {
+    table-layout: fixed !important;
+}
+
+/* Global fix for select containers and triggers */
+.custom-select-container div,
+.custom-select-container span,
+.multi-select-trigger,
+.multi-select-trigger span {
+    word-break: break-all !important;
+    white-space: normal !important;
+}
+
+/* Ensure table cells in fixed tables handle overflow */
+.table-fixed td {
+    overflow: hidden;
 }
