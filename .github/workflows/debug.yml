@@ -1,8 +1,0 @@
-name: Debug Workflow
-on: push
-jobs:
-  test-runner:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Hello
-        run: echo "Hello from Debug Workflow! Actions are working."
