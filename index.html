@@ -820,6 +820,10 @@
                         <div id="decisionPaginationTop"></div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left table-fixed">
+                                <colgroup>
+                                    <col class="w-3/4">
+                                    <col class="w-1/4">
+                                </colgroup>
                                 <tbody id="decisionTableBody" class="divide-y divide-slate-50"></tbody>
                             </table>
                             <div id="decisionPagination"></div>
@@ -905,6 +909,10 @@
                         <div id="resultPaginationTop"></div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left table-fixed">
+                                <colgroup>
+                                    <col class="w-3/4">
+                                    <col class="w-1/4">
+                                </colgroup>
                                 <tbody id="resultsTableBody" class="divide-y divide-slate-50"></tbody>
                             </table>
                             <div id="resultPagination"></div>
@@ -1742,7 +1750,7 @@
                     ? doshArray.map(d => `<span class="inline-block bg-red-50 text-red-600 border border-red-100 px-1.5 py-0.5 rounded text-[8px] font-bold mr-1 italic">${d}</span>`).join('')
                     : '';
 
-                tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 align-top">
+                tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 w-3/4 align-top">
                     <div class="flex items-center gap-2 mb-1">
                         <span class="text-[10px] text-red-600 uppercase font-bold">मूळ चूक:</span>
                         <div class="flex flex-wrap">${doshBadges}</div>
@@ -1752,7 +1760,7 @@
                     <div class="text-[10px] text-blue-600 uppercase font-bold mb-1">योग्य निर्णय:</div>
                     <div class="text-sm font-medium text-slate-800 word-wrapper">${getExpandableText(log.decision, 'd-' + log.id)}</div>
                 </td>
-                <td class="px-2 md:px-6 py-3 md:py-4 text-right w-16 md:w-24 align-top">
+                <td class="px-2 md:px-6 py-3 md:py-4 text-right w-1/4 align-top">
                     <div class="flex justify-end gap-2 md:gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button onclick="editEntry('decision', '${log.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -1936,7 +1944,7 @@
                     ? doshArray.map(d => `<span class="inline-block bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded text-[8px] font-bold mr-1 italic">${d}</span>`).join('')
                     : '';
 
-                tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 align-top">
+                tr.innerHTML = `<td class="px-2 md:px-6 py-3 md:py-4 w-3/4 align-top">
                     <div class="flex items-center gap-2 mb-1">
                         <span class="text-[10px] text-blue-600 uppercase font-bold">मूळ निर्णय:</span>
                         <div class="flex flex-wrap">${doshBadges}</div>
@@ -1946,7 +1954,7 @@
                     <div class="text-[10px] text-emerald-600 uppercase font-bold mb-1">परिणाम / बदल:</div>
                     <div class="text-sm font-bold text-emerald-700 word-wrapper">${getExpandableText(log.result, 'r-' + log.id)}</div>
                 </td>
-                <td class="px-2 md:px-6 py-3 md:py-4 text-right w-16 md:w-24 align-top">
+                <td class="px-2 md:px-6 py-3 md:py-4 text-right w-1/4 align-top">
                     <div class="flex justify-end gap-2 md:gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button onclick="editEntry('result', '${log.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
