@@ -16,6 +16,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <!-- XLSX library removed from sync load to improve performance -->
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -74,6 +75,8 @@
         <div class="max-w-6xl mx-auto overflow-x-auto hide-scrollbar flex justify-center">
             <ul
                 class="flex items-center gap-8 px-6 py-3 whitespace-nowrap text-[11px] md:text-xs font-bold text-blue-800 uppercase tracking-wider">
+                <li id="nav-dashboard" class="nav-link cursor-pointer transition-colors pb-0.5">📊 डॅशबोर्ड
+                </li>
                 <li id="nav-wrong" class="nav-link cursor-pointer transition-colors pb-0.5 active-tab">अयोग्य कृती / दोष
                 </li>
                 <li id="nav-decision" class="nav-link cursor-pointer transition-colors pb-0.5">योग्य निर्णय</li>
@@ -172,12 +175,197 @@
                 </div>
             </div>
             <div class="bg-slate-50 p-4 text-center">
-                <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest">आवृत्ती 1.8.5</p>
+                <p class="text-[10px] text-slate-600 font-bold uppercase tracking-widest">आवृत्ती 2.0.1</p>
             </div>
         </div>
     </div>
 
     <main>
+        <!-- DASHBOARD PAGE -->
+        <div id="page-dashboard" class="page-content max-w-6xl mx-auto px-4 py-8">
+            <header class="mb-8">
+                <h2 class="text-2xl font-extrabold tracking-tight text-slate-900">📊 आध्यात्मिक प्रगती डॅशबोर्ड</h2>
+                <p class="text-slate-600 text-sm italic">"आपल्या प्रवासाचा आढावा घ्या आणि वाढ पहा"</p>
+            </header>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Total Wrong Things -->
+                <div
+                    class="bg-gradient-to-br from-red-50 to-red-100 rounded-3xl shadow-lg border border-red-200 p-6 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="bg-red-500 p-3 rounded-2xl">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2.5">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-bold text-red-600 uppercase tracking-wider">एकूण दोष</span>
+                    </div>
+                    <div class="text-4xl font-extrabold text-red-700" id="stat-total-wrong">0</div>
+                    <p class="text-xs text-red-600 mt-2 font-semibold">नोंदवलेल्या चुका</p>
+                </div>
+
+                <!-- Total Decisions -->
+                <div
+                    class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl shadow-lg border border-blue-200 p-6 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="bg-blue-500 p-3 rounded-2xl">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2.5">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">योग्य निर्णय</span>
+                    </div>
+                    <div class="text-4xl font-extrabold text-blue-700" id="stat-total-decisions">0</div>
+                    <p class="text-xs text-blue-600 mt-2 font-semibold">घेतलेले निर्णय</p>
+                </div>
+
+                <!-- Total Results -->
+                <div
+                    class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-3xl shadow-lg border border-emerald-200 p-6 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="bg-emerald-500 p-3 rounded-2xl">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2.5">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                <path d="M4 22h16"></path>
+                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">परिणाम</span>
+                    </div>
+                    <div class="text-4xl font-extrabold text-emerald-700" id="stat-total-results">0</div>
+                    <p class="text-xs text-emerald-600 mt-2 font-semibold">अनुभवलेले बदल</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Daily Activity Chart -->
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-blue-500 rounded-full"></span>
+                        दैनंदिन क्रियाकलाप (शेवटचे 7 दिवस)
+                    </h3>
+                    <div class="h-64">
+                        <canvas id="dailyActivityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Most Used Dosh Chart -->
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-red-500 rounded-full"></span>
+                        सर्वाधिक आढळणारे दोष (Top 5)
+                    </h3>
+                    <div class="h-64 flex items-center justify-center">
+                        <canvas id="doshPieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Insights -->
+            <div
+                class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl shadow-xl border border-orange-200 p-8">
+                <h3 class="text-lg font-bold text-orange-800 mb-4 flex items-center gap-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    प्रगती अंतर्दृष्टी
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl p-4 border border-orange-100">
+                        <p class="text-xs font-bold text-orange-700 uppercase mb-2">सुधारणा दर</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-orange-700" id="improvement-rate">0%</span>
+                            <span class="text-xs text-slate-600">(निर्णय / दोष)</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 border border-orange-100">
+                        <p class="text-xs font-bold text-orange-700 uppercase mb-2">परिवर्तन दर</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-extrabold text-orange-700" id="transformation-rate">0%</span>
+                            <span class="text-xs text-slate-600">(परिणाम / निर्णय)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-white rounded-2xl border border-orange-100">
+                    <p class="text-sm font-semibold text-slate-700 mb-2">🎯 आजचा संदेश:</p>
+                    <p class="text-sm text-slate-600 italic leading-relaxed" id="daily-message">
+                        "प्रत्येक दिवस आत्म-सुधारणेची नवीन संधी आहे. आपली प्रगती चालू ठेवा!"
+                    </p>
+                </div>
+            </div>
+
+            <!-- Swabhavdosh Level Tracking -->
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 mt-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-purple-500 rounded-full"></span>
+                        स्वभावदोष तीव्रता ट्रॅक करा
+                    </h3>
+                    <button id="saveDoshLevels"
+                        class="px-4 py-2 bg-purple-600 text-white rounded-xl font-bold text-sm hover:bg-purple-700 transition-all shadow-lg">
+                        जतन करा
+                    </button>
+                </div>
+                <p class="text-sm text-slate-600 mb-6 italic">आपल्या प्रमुख 5 दोषांची तीव्रता ट्रॅक करा (उच्च, मध्यम,
+                    कमी)
+                </p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-2 border-slate-300 rounded-xl overflow-hidden table-fixed">
+                        <colgroup>
+                            <col class="w-16">
+                            <col class="w-48 md:w-64">
+                            <col class="w-16">
+                            <col class="w-16">
+                            <col class="w-16">
+                        </colgroup>
+                        <thead>
+                            <tr class="bg-slate-100">
+                                <th
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-3 text-center text-xs md:text-sm font-bold text-slate-700">
+                                    अनु</th>
+                                <th
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-3 text-center text-xs md:text-sm font-bold text-slate-700">
+                                    स्वभावदोष</th>
+                                <th colspan="3"
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-3 text-center text-xs md:text-sm font-bold text-slate-700">
+                                    स्वभावदोष तीव्रता</th>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <th class="border-2 border-slate-300 px-2 md:px-4 py-2"></th>
+                                <th class="border-2 border-slate-300 px-2 md:px-4 py-2"></th>
+                                <th
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-2 text-center text-[10px] md:text-xs font-bold text-slate-600">
+                                    तीव्र</th>
+                                <th
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-2 text-center text-[10px] md:text-xs font-bold text-slate-600">
+                                    मध्यम</th>
+                                <th
+                                    class="border-2 border-slate-300 px-2 md:px-4 py-2 text-center text-[10px] md:text-xs font-bold text-slate-600">
+                                    मंद</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doshLevelTableBody">
+                            <!-- Rows will be generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- WRONG THINGS PAGE -->
         <div id="page-wrong" class="page-content active max-w-6xl mx-auto px-4 py-8">
             <header class="mb-8">
@@ -1017,6 +1205,9 @@
                 document.getElementById(targetId).classList.add('active');
 
                 // On-demand rendering when switching tabs
+                if (targetId === 'page-dashboard') {
+                    renderDashboard();
+                }
                 if (targetId === 'page-decision') {
                     populateWrongSelector();
                     renderDecisions();
@@ -1027,6 +1218,335 @@
                 }
             };
         });
+
+        // --- Dashboard Logic ---
+        let dailyChart = null;
+        let doshChart = null;
+
+        function renderDashboard() {
+            // Update statistics
+            document.getElementById('stat-total-wrong').textContent = wrongLogs.length;
+            document.getElementById('stat-total-decisions').textContent = decisionLogs.length;
+            document.getElementById('stat-total-results').textContent = resultLogs.length;
+
+            // Calculate improvement rate
+            const improvementRate = wrongLogs.length > 0
+                ? Math.round((decisionLogs.length / wrongLogs.length) * 100)
+                : 0;
+            document.getElementById('improvement-rate').textContent = improvementRate + '%';
+
+            // Calculate transformation rate
+            const transformationRate = decisionLogs.length > 0
+                ? Math.round((resultLogs.length / decisionLogs.length) * 100)
+                : 0;
+            document.getElementById('transformation-rate').textContent = transformationRate + '%';
+
+            // Render charts
+            renderDailyActivityChart();
+            renderDoshPieChart();
+            updateDailyMessage();
+            renderDoshLevelTable();
+        }
+
+        function renderDailyActivityChart() {
+            const canvas = document.getElementById('dailyActivityChart');
+            if (!canvas) return;
+
+            // Get last 7 days
+            const today = new Date();
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                last7Days.push(date.toISOString().split('T')[0]);
+            }
+
+            // Count entries per day
+            const wrongCounts = last7Days.map(date =>
+                wrongLogs.filter(log => log.Date === date).length
+            );
+            const decisionCounts = last7Days.map(date =>
+                decisionLogs.filter(log => log.date === date).length
+            );
+            const resultCounts = last7Days.map(date =>
+                resultLogs.filter(log => log.date === date).length
+            );
+
+            // Format labels (show day name)
+            const labels = last7Days.map(date => {
+                const d = new Date(date);
+                const days = ['रवि', 'सोम', 'मंगळ', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
+                return days[d.getDay()];
+            });
+
+            // Destroy previous chart if exists
+            if (dailyChart) {
+                dailyChart.destroy();
+            }
+
+            // Create new chart
+            dailyChart = new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'दोष',
+                            data: wrongCounts,
+                            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                            borderColor: 'rgb(239, 68, 68)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'निर्णय',
+                            data: decisionCounts,
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: 'rgb(59, 130, 246)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'परिणाम',
+                            data: resultCounts,
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: 'rgb(16, 185, 129)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderDoshPieChart() {
+            const canvas = document.getElementById('doshPieChart');
+            if (!canvas) return;
+
+            // Count Dosh occurrences
+            const doshCount = {};
+            wrongLogs.forEach(log => {
+                const doshArray = Array.isArray(log.Dosh) ? log.Dosh : (log.Dosh ? [log.Dosh] : []);
+                doshArray.forEach(dosh => {
+                    if (dosh) {
+                        doshCount[dosh] = (doshCount[dosh] || 0) + 1;
+                    }
+                });
+            });
+
+            // Get top 5 Dosh
+            const sortedDosh = Object.entries(doshCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            if (sortedDosh.length === 0) {
+                // Show empty state
+                if (doshChart) {
+                    doshChart.destroy();
+                    doshChart = null;
+                }
+                canvas.parentElement.innerHTML = '<p class="text-slate-500 text-sm italic">अद्याप दोष नोंदवलेले नाहीत</p>';
+                return;
+            }
+
+            const labels = sortedDosh.map(([dosh]) => dosh);
+            const data = sortedDosh.map(([, count]) => count);
+
+            // Destroy previous chart if exists
+            if (doshChart) {
+                doshChart.destroy();
+            }
+
+            // Create new chart
+            doshChart = new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(234, 179, 8, 0.8)',
+                            'rgba(168, 85, 247, 0.8)',
+                            'rgba(236, 72, 153, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(239, 68, 68)',
+                            'rgb(249, 115, 22)',
+                            'rgb(234, 179, 8)',
+                            'rgb(168, 85, 247)',
+                            'rgb(236, 72, 153)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: {
+                                    size: 11,
+                                    weight: 'bold'
+                                },
+                                padding: 10
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateDailyMessage() {
+            const messages = [
+                "प्रत्येक दिवस आत्म-सुधारणेची नवीन संधी आहे. आपली प्रगती चालू ठेवा!",
+                "आत्मनिरीक्षण हे आध्यात्मिक वाढीचे पहिले पाऊल आहे.",
+                "चुकांमधून शिकणे हे खरे ज्ञान आहे.",
+                "योग्य निर्णय घेणे म्हणजे स्वतःला जाणणे.",
+                "प्रत्येक सुधारणा तुम्हाला परमात्म्याच्या जवळ घेऊन जाते.",
+                "सातत्य हे यशाचे रहस्य आहे. चालू ठेवा!",
+                "आपल्या दोषांना ओळखणे हे धैर्याचे लक्षण आहे."
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const messageEl = document.getElementById('daily-message');
+            if (messageEl) {
+                messageEl.textContent = randomMessage;
+            }
+        }
+
+        // --- Dosh Level Tracking ---
+        const STORAGE_DOSH_LEVELS = 'ss_dosh_levels';
+        let doshLevels = JSON.parse(localStorage.getItem(STORAGE_DOSH_LEVELS)) || [];
+
+        // All available Dosh options (from your multi-select dropdown)
+        const allDoshOptions = [
+            'काम (Lust)', 'आळस (Laziness)', 'क्रोध (Anger)', 'चिडचिड (Irritability)',
+            'लोभ (Greed)', 'मोह (Attachment)', 'मद (Arrogance)', 'मत्सर (Jealousy)',
+            'अहंकार (Ego)', 'भय (Fear)', 'खोटे बोलणे (Lying)', 'निंदा (Criticism)',
+            'भांडखोरपणा (Quarrelsomeness)', 'अपेक्षा (Expectations)', 'बेफिकीरपणा (Carelessness)',
+            'अविचारीपणा (Thoughtlessness)', 'स्वार्थ (Selfishness)', 'हेवा (Envy)',
+            'द्वेष (Hatred)', 'राग (Rage)', 'असंतोष (Dissatisfaction)', 'अधीरता (Impatience)',
+            'अभिमान (Pride)', 'दुराग्रह (Stubbornness)', 'संशय (Doubt)',
+            'अनादर (Disrespect)', 'असुरक्षितता (Insecurity)', 'निराशा (Despair)',
+            'आत्मकेंद्रितता (Self-centeredness)', 'उदासीनता (Indifference)'
+        ];
+
+        function renderDoshLevelTable() {
+            const tbody = document.getElementById('doshLevelTableBody');
+            if (!tbody) return;
+
+            // Ensure we have exactly 5 rows
+            while (doshLevels.length < 5) {
+                doshLevels.push({ dosh: '', level: '' });
+            }
+            doshLevels = doshLevels.slice(0, 5);
+
+            tbody.innerHTML = '';
+
+            doshLevels.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition-colors';
+
+                tr.innerHTML = `
+                    <td class="border-2 border-slate-300 px-2 md:px-4 py-2 md:py-3 text-center font-bold text-slate-700 text-xs md:text-sm">${index + 1}</td>
+                    <td class="border-2 border-slate-300 px-1 md:px-4 py-2 md:py-3">
+                        <select class="dosh-select w-full px-2 md:px-3 py-1.5 md:py-2 border border-slate-300 rounded-lg text-[11px] md:text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none" data-index="${index}" aria-label="दोष ${index + 1} निवडा">
+                            <option value="">-- दोष निवडा --</option>
+                            ${allDoshOptions.map(dosh =>
+                    `<option value="${dosh}" ${item.dosh === dosh ? 'selected' : ''}>${dosh}</option>`
+                ).join('')}
+                        </select>
+                    </td>
+                    <td class="border-2 border-slate-300 px-2 md:px-4 py-2 md:py-3 text-center">
+                        <input type="checkbox" class="level-checkbox w-4 h-4 md:w-5 md:h-5 accent-green-600 cursor-pointer" 
+                               data-index="${index}" data-level="high" ${item.level === 'high' ? 'checked' : ''} aria-label="दोष ${index + 1} तीव्र पातळी">
+                    </td>
+                    <td class="border-2 border-slate-300 px-2 md:px-4 py-2 md:py-3 text-center">
+                        <input type="checkbox" class="level-checkbox w-4 h-4 md:w-5 md:h-5 accent-yellow-600 cursor-pointer" 
+                               data-index="${index}" data-level="medium" ${item.level === 'medium' ? 'checked' : ''} aria-label="दोष ${index + 1} मध्यम पातळी">
+                    </td>
+                    <td class="border-2 border-slate-300 px-2 md:px-4 py-2 md:py-3 text-center">
+                        <input type="checkbox" class="level-checkbox w-4 h-4 md:w-5 md:h-5 accent-blue-600 cursor-pointer" 
+                               data-index="${index}" data-level="low" ${item.level === 'low' ? 'checked' : ''} aria-label="दोष ${index + 1} मंद पातळी">
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+
+            // Attach event listeners
+            attachDoshLevelListeners();
+        }
+
+        function attachDoshLevelListeners() {
+            // Dosh selection change
+            document.querySelectorAll('.dosh-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    doshLevels[index].dosh = e.target.value;
+                });
+            });
+
+            // Level checkbox change (only one can be selected per row)
+            document.querySelectorAll('.level-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const level = e.target.dataset.level;
+
+                    if (e.target.checked) {
+                        // Uncheck other checkboxes in the same row
+                        document.querySelectorAll(`.level-checkbox[data-index="${index}"]`).forEach(cb => {
+                            if (cb !== e.target) cb.checked = false;
+                        });
+                        doshLevels[index].level = level;
+                    } else {
+                        doshLevels[index].level = '';
+                    }
+                });
+            });
+        }
+
+        // Save button handler
+        document.getElementById('saveDoshLevels')?.addEventListener('click', () => {
+            // Validate that all rows have both dosh and level selected
+            const validEntries = doshLevels.filter(item => item.dosh && item.level);
+
+            if (validEntries.length === 0) {
+                showToast('कृपया किमान एक दोष आणि पातळी निवडा');
+                return;
+            }
+
+            localStorage.setItem(STORAGE_DOSH_LEVELS, JSON.stringify(doshLevels));
+            showToast('दोष पातळी यशस्वीरित्या जतन केली!');
+        });
+
+        // Initial dashboard render on page load
+        if (document.getElementById('page-dashboard').classList.contains('active')) {
+            renderDashboard();
+        }
 
         // --- Custom Multi-Select Dropdown Logic ---
         const doshTrigger = document.getElementById('doshTrigger');
