@@ -334,9 +334,16 @@ body {
 }
 
 /* Prevent horizontal overflow of long strings */
+/* Professional Word Wrapping */
+.word-wrapper {
+    overflow-wrap: anywhere !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    line-height: 1.6;
+}
+
 .break-all {
-    word-break: break-all !important;
-    overflow-wrap: break-word !important;
+    overflow-wrap: anywhere !important;
 }
 
 .whitespace-normal {
