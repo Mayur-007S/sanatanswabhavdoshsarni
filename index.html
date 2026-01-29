@@ -1443,15 +1443,12 @@
 
         // All available Dosh options (from your multi-select dropdown)
         const allDoshOptions = [
-            'काम (Lust)', 'आळस (Laziness)', 'क्रोध (Anger)', 'चिडचिड (Irritability)',
-            'लोभ (Greed)', 'मोह (Attachment)', 'मद (Arrogance)', 'मत्सर (Jealousy)',
-            'अहंकार (Ego)', 'भय (Fear)', 'खोटे बोलणे (Lying)', 'निंदा (Criticism)',
-            'भांडखोरपणा (Quarrelsomeness)', 'अपेक्षा (Expectations)', 'बेफिकीरपणा (Carelessness)',
-            'अविचारीपणा (Thoughtlessness)', 'स्वार्थ (Selfishness)', 'हेवा (Envy)',
-            'द्वेष (Hatred)', 'राग (Rage)', 'असंतोष (Dissatisfaction)', 'अधीरता (Impatience)',
-            'अभिमान (Pride)', 'दुराग्रह (Stubbornness)', 'संशय (Doubt)',
-            'अनादर (Disrespect)', 'असुरक्षितता (Insecurity)', 'निराशा (Despair)',
-            'आत्मकेंद्रितता (Self-centeredness)', 'उदासीनता (Indifference)'
+            'काम', 'क्रोध / राग', 'लोभ', 'मोह', 'मद / ताठा', 'मत्सर / द्वेष',
+            'शीघ्रकोपीपणा', 'चिडखोरपणा', 'भांडखोरपणा', 'विध्वंसकवृत्ती', 'दुसऱ्याला तुच्छ लेखणे', 'इतरांच्या चुका शोधणे', 'टीका करणे',
+            'अहंकार / गर्व', 'भावविवशता', 'भीती', 'खोटे बोलणे / अप्रामाणिकपणा', 'संशयीवृत्ती', 'कृतघ्नपणा', 'पश्चात्ताप न होणे', 'गांभीर्याचा अभाव', 'नियोजनाचा अभाव', 'विसरभोळेपणा',
+            'आळस', 'घाईघाईने करणे / उतावळेपणा', 'निष्काळजीपणा', 'बेजबाबदारपणा', 'अवज्ञा करणे', 'विनाकारण बोलणे', 'संकुचितवृत्ती', 'निर्णयक्षमतेचा अभाव', 'आत्मविश्वासाचा अभाव', 'उधळपट्टी', 'अव्यवस्थितपणा',
+            'अधिकारवाणीने बोलणे (Speaking authoritatively)', 'इतरांचे लक्ष वेधून घेणे (Attracting attention)', 'अपेक्षा करणे (Having expectations)', 'कर्तेपणा घेणे (Taking doership)', 'स्वतःला अधिक कळते असे वाटणे (Thinking one knows more)', 'चूक मान्य न करणे (Not admitting mistakes)', 'चिकाटीचा अभाव (Lack of perseverance)', 'एकलकोंडेपणा (Solitariness)', 'पूर्वग्रहदूषित असणे (Being prejudiced)', 'असमंजसपणा (Unreasonableness)', 'चातुर्य नसणे (Lack of tact)', 'निष्ठेने न वागणे (Unfaithfulness)', 'लाच घेणे किंवा देणे (Bribery)', 'दिखाऊपणा (Showiness)', 'मी म्हणतो तसेच झाले पाहिजे (Insisting on one\'s way)', 'तुलना करणे (Comparing)', 'कौतुकाची अपेक्षा करणे (Expecting praise)', 'मनाप्रमाणे वागणे (Self-willed behavior)',
+            'काळजी करणे (Worrying)', 'चिंतातुरता (Anxiety)', 'उध्दटपणा (Rudeness)', 'सहनशीलता नसणे (Lack of tolerance)', 'हट्टीपणा (Stubbornness)', 'स्वार्थीपणा (Selfishness)', 'नकारात्मक विचार (Negative thinking)', 'वर्चस्व गाजवणे (Dominating)', 'एकाग्रता नसणे (Lack of concentration)', 'लहरीपणा (Moodiness)', 'दुसऱ्यांना निरुत्साही करणे (Discouraging others)', 'न्युनगंड असणे (Inferiority complex)', 'सहानुभूति न वाटणे (Lack of empathy)', 'वक्तशीरपणाचा अभाव (Lack of punctuality)', 'सूडबुद्धी असणे (Vengefulness)', 'नीतीने न वागणे (Unethical behavior)', 'कंजूषपणा (Miserliness)', 'पक्षपातीपणा (Partiality)', 'अतिमहत्वाकांक्षी असणे (Over-ambitious)', 'मनोराज्यात रमणे (Daydreaming)', 'दुसऱ्यांनी लक्ष द्यावे असे वाटणे (Seeking attention)', 'निराशावादी वृत्ती (Pessimistic attitude)', 'इतर'
         ];
 
         function renderDoshLevelTable() {
